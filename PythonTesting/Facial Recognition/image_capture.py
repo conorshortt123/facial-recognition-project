@@ -1,4 +1,4 @@
-import face_recognition, cv2, sys, time
+import cv2
 
 cap = cv2.VideoCapture(0)
 i=0
