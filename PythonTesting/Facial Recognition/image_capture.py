@@ -9,7 +9,7 @@ while(True):
     cv2.imshow("Video", frame)
     key = cv2.waitKey(1)
     if key == ord('q'):
-        cv2.imwrite('image.jpg', frame)
+        cv2.imwrite('../Faces/image.jpg', frame)
         break
     
 cap.release()
