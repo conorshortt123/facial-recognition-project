@@ -1,3 +1,2 @@
-"C:\Users\Conor Shortt\AppData\Local\Programs\Python\Python38-32\python.exe" "C:\Users\Conor Shortt\Desktop\ProfITProj\facial-recognition-project\PythonTesting\Facial Recognition\image_capture.py"
-pause
-"C:\Users\Conor Shortt\AppData\Local\Programs\Python\Python38-32\python.exe" "C:\Users\Conor Shortt\Desktop\ProfITProj\facial-recognition-project\PythonTesting\Facial Recognition\facial_recognition.py"
+python image_capture.py
+python facial_recognition.py
