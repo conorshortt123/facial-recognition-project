@@ -1,5 +1,7 @@
 appdirs==1.4.3
 astroid==2.3.3
+bcrypt==3.1.7
+cffi==1.14.0
 Click==7.0
 colorama==0.4.3
 cycler==0.10.0
@@ -10,6 +12,7 @@ face-recognition==1.2.3
 face-recognition-models==0.3.0
 filelock==3.0.12
 Flask==1.1.1
+Flask-Bcrypt==0.7.1
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.3
 imageio==2.8.0
@@ -27,6 +30,7 @@ numpy==1.18.1
 opencv-contrib-python==4.2.0.32
 opencv-python==4.2.0.32
 Pillow==7.0.0
+pycparser==2.19
 pylint==2.4.4
 pyparsing==2.4.6
 python-dateutil==2.8.1
