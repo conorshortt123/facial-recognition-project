@@ -3,7 +3,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 from prototype import app, db, bcrypt
 from prototype.forms import RegistrationForm, LoginForm
 from prototype.models import User, Post
-from prototype.facial_recognition import generate
+import sys
+sys.path.insert(1, '../API')
+from facial_recognition import generate
 
 posts = [
 	{

@@ -1,6 +1,8 @@
 import threading
 from prototype import app
-from prototype.facial_recognition import recognize_face
+import sys
+sys.path.insert(1, '../API')
+from facial_recognition import recognize_face
 
 # check to see if this is the main thread of execution
 if __name__ == '__main__':
