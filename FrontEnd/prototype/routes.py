@@ -44,23 +44,43 @@ def about():
     return render_template('about.html', title='About')
 
 
+
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
+
     form = RegistrationForm()
+
+
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
 
-        #Add details to mongoDB database 
-        post = {"userName":form.username.data,"password":form.password.data,"email":form.email.data}
-        collection.insert_one(post)
+        found = False
+        searchName = form.username.data
+        print("searchName " + searchName)
+        results = collection.find({"userName":searchName})
+        for result in results:
+            print(result)
+            if result["userName"] == searchName:
+                found = True
+                print("UserName Found")
+                print(result["userName"])
 
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('home'))
+        if found == False:
+            #Add details to mongoDB database 
+            post = {"userName":form.username.data,"password":form.password.data,"email":form.email.data}
+            collection.insert_one(post)
+            flash('Your account has been created! You are now able to log in', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Username already Taken!', 'Error')
+
+
     return render_template('register.html', title='Register', form=form)
-
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
