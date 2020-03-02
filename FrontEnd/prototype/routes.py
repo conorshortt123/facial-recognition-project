@@ -1,8 +1,12 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, Response, Flask
+from flask_login import login_user, current_user, logout_user, login_required
 from prototype import app, db, bcrypt
 from prototype.forms import RegistrationForm, LoginForm
 from prototype.models import User, Post
-from flask_login import login_user, current_user, logout_user, login_required
+import sys
+sys.path.insert(1, '../API')
+from facial_recognition import generate
+
 
 # MONGODB Imports
 import pymongo
@@ -67,6 +71,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
 
         results = collection.find({"email":form.email.data})
+        print(results)
 
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
@@ -75,6 +80,11 @@ def login():
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/face_recognition", methods=['GET', 'POST'])
+def facerecognition():
+   return render_template('videofeed.html', title='Facial Recognition')
 
 @app.route("/logout")
 def logout():
@@ -86,3 +96,10 @@ def logout():
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
+
+@app.route("/video_feed")
+def video_feed():
+   # return the response generated along with the specific media
+   # type (mime type)
+   return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
