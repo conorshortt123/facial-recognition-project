@@ -106,7 +106,7 @@ def login():
         searchEmail = form.email.data
         searchPass = form.password.data
         print("searchEmail " + searchEmail)
-        #Search database for the entered username 
+        #Search database for the entered username
         results = collection.find({"email":searchEmail})
         for result in results:
             print(result)
@@ -122,14 +122,6 @@ def login():
         else:
             flash('Login Unsuccessful. Please check Email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
-
-    #     if user and bcrypt.check_password_hash(user.password, form.password.data):
-    #         login_user(user, remember=form.remember.data)
-    #         next_page = request.args.get('next')
-    #         return redirect(next_page) if next_page else redirect(url_for('home'))
-    #     else:
-    #         flash('Login Unsuccessful. Please check username and password', 'danger')
-    # return render_template('login.html', title='Login', form=form)
 
 #_______________________________________________________________________________________________________________
 
