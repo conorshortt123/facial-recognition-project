@@ -1,5 +1,6 @@
 # facial-recognition-project
-Professional Practice in IT project repository --- Third Yr Sm 2.
+Professional Practice in IT project repository --- Third Yr Sm 2.</br>
+###Authors:
 </br>Conor Shortt</br>
 Blaine Burke</br>
 Mark Reilly</br></br>
