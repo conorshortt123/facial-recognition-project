@@ -1,2 +1,0 @@
-python image_capture.py
-python facial_recognition.py
