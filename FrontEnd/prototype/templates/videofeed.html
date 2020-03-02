@@ -1,9 +1,5 @@
-<html>
-  <head>
-    <title>Facial Recognition in Flask</title>
-  </head>
-  <body>
-    <h1>Facial Recognition in Flask</h1>
+{% extends "layout.html" %}
+{% block content %}
     <img src="{{ url_for('video_feed') }}">
-  </body>
-</html>
+
+{% endblock content %}
