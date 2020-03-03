@@ -6,6 +6,7 @@ from prototype.models import User, Post
 import sys
 sys.path.insert(1, '../API')
 from facial_recognition import generate
+from upload_picture import upload_file
 
 
 # MONGODB Imports
@@ -148,5 +149,9 @@ def account():
 @app.route("/video_feed")
 def video_feed():
    # return the response generated along with the specific media
-   # type (mime type)
    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
+@app.route("/upload_image", methods=["GET", "POST"])
+def upload_image():
+    upload_file()
+    return render_template("file_upload.html")
