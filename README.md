@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/conorshortt123/facial-recognition-project) 
+
 # facial-recognition-project
 Professional Practice in IT project repository --- Third Yr Sm 2.</br>
 ### Authors:

@@ -1,0 +1,6 @@
+tasks:
+  - init: pip install -r ./requirements.txt
+image:
+  file: .gitpod.Dockerfile
+ports:
+  - port: 5000
