@@ -151,7 +151,7 @@ def video_feed():
    # return the response generated along with the specific media
    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
-@app.route("/upload_image", methods=["GET", "POST"])
-def upload_image():
+@app.route("/file_upload", methods=["GET", "POST"])
+def file_upload():
     upload_file()
-    return render_template("file_upload.html")
+    return render_template("file_upload.html", title='File Upload')
