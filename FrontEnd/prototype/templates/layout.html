@@ -33,7 +33,7 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
+              {% if session['logged_in']%}
               <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
               <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
               {% else %}

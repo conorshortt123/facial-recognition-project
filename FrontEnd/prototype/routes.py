@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Response, Flask
+from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
 from flask_login import login_user, current_user, logout_user, login_required
 from prototype import app, db, bcrypt
 from prototype.forms import RegistrationForm, LoginForm
@@ -119,6 +119,7 @@ def login():
 
         if found == True:
             flash('You are now logged in!', 'success')
+            session['logged_in'] = True
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check Email and password', 'danger')
@@ -135,6 +136,7 @@ def facerecognition():
 @app.route("/logout")
 def logout():
     logout_user()
+    session['logged_in'] = False
     return redirect(url_for('home'))
 
 #_______________________________________________________________________________________________________________
