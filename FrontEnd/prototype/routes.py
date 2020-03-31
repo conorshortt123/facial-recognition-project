@@ -8,6 +8,10 @@ sys.path.insert(1, '../API')
 from facial_recognition import generate
 from upload_picture import upload_file
 
+import sys
+sys.path.insert(1, '../Backend')
+from server import *
+
 
 # MONGODB Imports
 import pymongo
@@ -53,43 +57,24 @@ def register():
         return redirect(url_for('home'))
     #Get registration form 
     form = RegistrationForm()
-
-    #Validate Form Username to ensure no username is the same
+      #Validate Form Username to ensure no username is the same
     #Therefore making usernames a primary Key for the database
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-
-        found = False
-        searchEmail = form.email.data
-        print("searchEmail " + searchEmail)
-        #Search database for the entered username 
-        results = collection.find({"email":searchEmail})
-        for result in results:
-            print(result)
-
-            # If found the 'found' variable becomes true it fails the 
-            # registration attempt as the username is taken
-            if result["email"] == searchEmail:
-                found = True
-                print("User Found")
-                print(result["email"])
-
-        # If not found the 'found' variable remains false and 
-        # the registration succeeds as the username isn't taken
-        if found == False:
-            #Add details to mongoDB database 
-            post = {"userName":form.username.data,"password":form.password.data,"email":form.email.data}
-            collection.insert_one(post)
+         
+        found = registerUser(form.username.data,form.email.data,form.password.data)  
+        
+        if found == True:
+            # if it is unsuccessful you are not moved
+            return render_template('register.html', title='Register', form=form)
+        elif found == False:
             flash('Your account has been created! You are now able to log in', 'success')
             # if it is successful you are returned home
-            return redirect(url_for('home'))
-        else:
-            flash('email already Taken!', 'error')
-
-    # if it is unsuccessful you are not moved
+            return redirect(url_for('home'))  
+   # if it is unsuccessful you are not moved
     return render_template('register.html', title='Register', form=form)
 
+  
 #_______________________________________________________________________________________________________________
 
 @app.route("/login", methods=['GET', 'POST'])
