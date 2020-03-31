@@ -44,3 +44,22 @@ def registerUser(username,email,password):
         
     return found
     
+def SignInUser(email,password):
+    
+    found = False
+    searchEmail = email
+    searchPass = password
+    print("searchEmail " + searchEmail)
+    #Search database for the entered username
+    results = collection.find({"email":searchEmail})
+    for result in results:
+        print(result)
+
+        if result["email"] == searchEmail:
+            print("Email Found")
+            if result["password"]==searchPass:
+                found = True
+                
+    return found
+   
+    

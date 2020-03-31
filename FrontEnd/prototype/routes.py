@@ -82,26 +82,12 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
-
     form = LoginForm()
-
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-
-        found = False
-        searchEmail = form.email.data
-        searchPass = form.password.data
-        print("searchEmail " + searchEmail)
-        #Search database for the entered username
-        results = collection.find({"email":searchEmail})
-        for result in results:
-            print(result)
-
-            if result["email"] == searchEmail:
-                print("Email Found")
-                if result["password"]==searchPass:
-                    found = True
-
+        
+        found = SignInUser(form.email.data,form.password.data)
+        
         if found == True:
             flash('You are now logged in!', 'success')
             session['logged_in'] = True
