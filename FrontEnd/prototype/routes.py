@@ -23,18 +23,6 @@ db = cluster["test"]
 collection = db["test"]
 
 posts = [
-    {
-        'author': 'Tim Smith',
-        'title': 'Blog Post',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Mark Reilly',
-        'title': 'Facial Recognition',
-        'content': 'First post content',
-        'date_posted': 'February 12, 2020'
-    }
 ]
 
 
@@ -57,12 +45,16 @@ def register():
         return redirect(url_for('home'))
     #Get registration form 
     form = RegistrationForm()
-      #Validate Form Username to ensure no username is the same
+    
+    #Validate Form Username to ensure no username is the same
     #Therefore making usernames a primary Key for the database
+    
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-         
-        found = registerUser(form.username.data,form.email.data,form.password.data)  
+        
+        imagefile = request.form.get('Profile_pic')
+        
+        found = registerUser(form.username.data,form.email.data,form.password.data,imagefile)  
         
         if found == True:
             # if it is unsuccessful you are not moved

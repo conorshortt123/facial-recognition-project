@@ -18,7 +18,7 @@ cluster = MongoClient("mongodb+srv://admin:admin@users-qtiue.mongodb.net/test?re
 db = cluster["test"]
 collection = db["test"]
 
-def registerUser(username,email,password):
+def registerUser(username,email,password,Image):
 
     found = False
     searchEmail = email
@@ -39,7 +39,7 @@ def registerUser(username,email,password):
     # the registration succeeds as the username isn't taken
     if found == False:
         #Add details to mongoDB database 
-        post = {"userName":username,"password":password,"email":email}
+        post = {"userName":username,"password":password,"email":email,"Image":Image}
         collection.insert_one(post)
         
     return found
@@ -62,4 +62,24 @@ def SignInUser(email,password):
                 
     return found
    
+def retrieveDetails(searchEmail):
+    found = False
+        
+    results = collection.find({"email":searchEmail})
+    for result in results:
+        print(result)
+
+        if result["email"] == searchEmail:
+            #User Found
+            print("Email Found")
+            
+            username = result["userName"]
+            email = result["email"]
+            profilePic = result["Image"]
+            
+            return username,email,profilePic
+            
+            
+       
+    
     
