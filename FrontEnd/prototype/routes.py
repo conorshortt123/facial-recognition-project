@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
 from flask_login import login_user, current_user, logout_user, login_required
 from prototype import app, db, bcrypt
-from prototype.forms import RegistrationForm, LoginForm
+from prototype.forms import RegistrationForm, LoginForm #,searchForm
 from prototype.models import User, Post
 import sys
 sys.path.insert(1, '../API')
@@ -33,9 +33,9 @@ def home():
 
 #_______________________________________________________________________________________________________________
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
+@app.route("/search")
+def search():
+    return render_template('search.html', title='Search')
 
 #_______________________________________________________________________________________________________________
 
@@ -116,7 +116,25 @@ def video_feed():
    # return the response generated along with the specific media
    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
+#_______________________________________________________________________________________________________________
+
 @app.route("/file_upload", methods=["GET", "POST"])
 def file_upload():
     upload_file()
     return render_template("file_upload.html", title='File Upload')
+
+#_______________________________________________________________________________________________________________
+
+# @app.route("/about", methods=["GET", "POST"])
+# def search():
+    
+    
+#     print("DEBUGGING:1")
+#     if request.method == 'POST':
+#         email = request.form['text']
+#         userName , userEmail , profilePic = retrieveDetails(email)
+#         print("DEBUGGING:4")
+#         return render_template('search.html',userName,userEmail,profilePic)
+    
+#     print("DEBUGGING:3")
+#     return render_template('search.html')
