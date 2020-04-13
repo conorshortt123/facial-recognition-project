@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+{%if session['logged_in'] %}
+    <h3>Greetings {{session['current_user']}}</h3>
+{% else %}
+    Please Login.
+{% endif %}
+{% endblock content %}

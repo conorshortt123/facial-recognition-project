@@ -1,30 +1,20 @@
 from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
 from flask_login import login_user, current_user, logout_user, login_required
-from prototype import app, db, bcrypt
-from prototype.forms import RegistrationForm, LoginForm #,searchForm
-from prototype.models import User, Post
+from FrontEnd import app, bcrypt
+from FrontEnd.forms import RegistrationForm, LoginForm
+from Backend.server import add_new_user, verify_credentials
 import sys
-sys.path.insert(1, '../API')
-from facial_recognition import generate
-from upload_picture import upload_file
+from functools import wraps
 
-import sys
-sys.path.insert(1, '../Backend')
-from server import *
-
-
-# MONGODB Imports
-import pymongo
-from pymongo import MongoClient
-
-# Connect to server
-cluster = MongoClient("mongodb+srv://admin:admin@users-qtiue.mongodb.net/test?retryWrites=true&w=majority")
-db = cluster["test"]
-collection = db["test"]
-
-posts = [
-]
-
+def login_required(f):
+    @wraps(f)
+    def wrap(*args,**kwargs):
+        if 'logged_in' in session:
+            return f(*args,**kwargs)
+        else:
+            flash("You need to login or signup to view that.")
+            return redirect(url_for('login'))
+    return wrap
 
 @app.route("/")
 @app.route("/home")
@@ -41,29 +31,21 @@ def search():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    error = None
+    form = RegistrationForm()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    #Get registration form 
-    form = RegistrationForm()
-    
-    #Validate Form Username to ensure no username is the same
-    #Therefore making usernames a primary Key for the database
-    
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        
-        imagefile = request.form.get('Profile_pic')
-        
-        found = registerUser(form.username.data,form.email.data,form.password.data,imagefile)  
-        
-        if found == True:
-            # if it is unsuccessful you are not moved
-            return render_template('register.html', title='Register', form=form)
-        elif found == False:
+    if request.method == 'POST':
+        success = add_new_user(form.username.data, 
+                               request.form['password'],
+                               form.email.data,
+                               form.image.data)
+        if success:
             flash('Your account has been created! You are now able to log in', 'success')
-            # if it is successful you are returned home
-            return redirect(url_for('home'))  
-   # if it is unsuccessful you are not moved
+            return redirect(url_for('home'))
+        else:
+            flash('Username ' + form.username.data + ' already exists, Please try alternative Username')
+            error = 'Username already exists'
     return render_template('register.html', title='Register', form=form)
 
   
@@ -73,18 +55,15 @@ def register():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-
     form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        
-        found = SignInUser(form.email.data,form.password.data)
-        
-        if found == True:
-            flash('You are now logged in!', 'success')
+    if request.method == 'POST':
+        if verify_credentials(request.form['username'], request.form['password']):
             session['logged_in'] = True
+            session['current_user'] = form.username.data
+            flash('You are now logged in!', 'success')
             return redirect(url_for('home'))
         else:
+            error = 'Invalid credentials. Please try again.'
             flash('Login Unsuccessful. Please check Email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
@@ -97,6 +76,7 @@ def facerecognition():
 #_______________________________________________________________________________________________________________
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     session['logged_in'] = False

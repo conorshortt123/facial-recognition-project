@@ -14,15 +14,15 @@ time.sleep(2.0)
 vs = VideoStream(src=0).start()
 
 # Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("./prototype/trained/obama.jpg")
+obama_image = face_recognition.load_image_file("./API/trained/obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("./prototype/trained/biden.jpg")
+biden_image = face_recognition.load_image_file("./API/trained/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Load my own picture and learn how to recognize it.
-my_image = face_recognition.load_image_file("./prototype/trained/image.jpg")
+my_image = face_recognition.load_image_file("./API/trained/image.jpg")
 my_face_encoding = face_recognition.face_encodings(my_image)[0]
 
 # Create arrays of known face encodings and their names

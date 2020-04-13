@@ -1,7 +1,7 @@
 import threading
-from prototype import app
+from FrontEnd import app
 import sys
-sys.path.insert(1, '../API')
+from API import facial_recognition
 from facial_recognition import recognize_face
 
 # check to see if this is the main thread of execution
