@@ -6,6 +6,8 @@ import time
 import cv2
 import numpy as np
 import face_recognition
+from bson.binary import Binary
+import pickle
 
 # Initialize some variables
 outputFrame = None
@@ -22,19 +24,17 @@ biden_image = face_recognition.load_image_file("./API/trained/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Load my own picture and learn how to recognize it.
-my_image = face_recognition.load_image_file("./API/trained/image.jpg")
-my_face_encoding = face_recognition.face_encodings(my_image)[0]
+#my_image = face_recognition.load_image_file("./API/trained/image.jpg")
+#my_face_encoding = face_recognition.face_encodings(my_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     obama_face_encoding,
-    biden_face_encoding,
-	my_face_encoding
+    biden_face_encoding
 ]
 known_face_names = [
     "Barack Obama",
-    "Joe Biden",
-	"Conor Shortt"
+    "Joe Biden"
 ]
 
 # Initialize some variables
@@ -107,26 +107,32 @@ def recognize_face():
 		with lock:
 			outputFrame = frame.copy()
 
-def generate():
-	# grab global references to the output frame and lock variables
-	global outputFrame, lock
 
-	# loop over frames from the output stream
-	while True:
-		# wait until the lock is acquired
-		with lock:
-			# check if the output frame is available, otherwise skip
-			# the iteration of the loop
-			if outputFrame is None:
-				continue
+def encodeImageBinary(image):
 
-			# encode the frame in JPEG format
-			(flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
+	image_file = face_recognition.load_image_file(image)
+	image_encoding = face_recognition.face_encodings(image_file)[0]
 
-			# ensure the frame was successfully encoded
-			if not flag:
-				continue
+	bArray = Binary(pickle.dumps(image_encoding, protocol=2), subtype=128)
 
-		# yield the output frame in the byte format
-		yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
-			   bytearray(encodedImage) + b'\r\n')
+	return bArray
+
+
+def encodeImageNumpy(image):
+
+	image_file = face_recognition.load_image_file(image)
+	image_encoding = face_recognition.face_encodings(image_file)[0]
+
+	return image_encoding
+
+
+def decodeBinaryToNumpy(bArray):
+
+	image_encoding = pickle.loads(bArray)
+
+
+def compareImages(image_encoding1, image_encoding2):
+
+	result = face_recognition.compare_faces([image_encoding1, image_encoding2])
+
+	return result

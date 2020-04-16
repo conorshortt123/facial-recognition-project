@@ -2,9 +2,23 @@ from flask import render_template, url_for, flash, redirect, request, Response, 
 from flask_login import login_user, current_user, logout_user, login_required
 from FrontEnd import app, bcrypt
 from FrontEnd.forms import RegistrationForm, LoginForm
+from FrontEnd.camera import Camera
 from Backend.server import add_new_user, verify_credentials
 import sys
+import os
+import shutil
 from functools import wraps
+sys.path.insert(1, './API')
+from facial_recognition import encodeImageBinary
+
+camera = None
+
+def get_camera():
+    global camera
+    if not camera:
+        camera = Camera()
+
+    return camera
 
 def login_required(f):
     @wraps(f)
@@ -19,15 +33,16 @@ def login_required(f):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
-#_______________________________________________________________________________________________________________
+@app.route('/camera/')
+def index():
+    return render_template('camera.html')
 
 @app.route("/search")
 def search():
     return render_template('search.html', title='Search')
 
-#_______________________________________________________________________________________________________________
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -36,10 +51,12 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     if request.method == 'POST':
+        binary_encoding = encodeImageBinary(form.image.data)
+
         success = add_new_user(form.username.data, 
                                request.form['password'],
                                form.email.data,
-                               form.image.data)
+                               binary_encoding)
         if success:
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('home'))
@@ -69,12 +86,6 @@ def login():
 
 #_______________________________________________________________________________________________________________
 
-@app.route("/face_recognition", methods=['GET', 'POST'])
-def facerecognition():
-   return render_template('videofeed.html', title='Facial Recognition')
-
-#_______________________________________________________________________________________________________________
-
 @app.route("/logout")
 @login_required
 def logout():
@@ -89,20 +100,37 @@ def logout():
 def account():
     return render_template('account.html', title='Account')
 
-#_______________________________________________________________________________________________________________
+def gen(camera):
+    while True:
+        frame = camera.get_feed()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@app.route("/video_feed")
+@app.route('/video_feed/')
 def video_feed():
-   # return the response generated along with the specific media
-   return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+    camera = get_camera()
+    return Response(gen(camera),
+        mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/capture/')
+def capture():
+    camera = get_camera()
+    stamp = camera.capture()
+    print("STAMP = " + stamp)
+    return redirect(url_for('show_capture', timestamp=stamp))
+
+def stamp_file(timestamp):
+    return 'captures/' + timestamp +".jpg"
+
+@app.route('/capture/image/<timestamp>', methods=['POST', 'GET'])
+def show_capture(timestamp):
+    path = stamp_file(timestamp)
+    print("PATH = " + path)
+
+    return render_template('capture.html',
+        stamp=timestamp, path=path)
 
 #_______________________________________________________________________________________________________________
-
-@app.route("/file_upload", methods=["GET", "POST"])
-def file_upload():
-    upload_file()
-    return render_template("file_upload.html", title='File Upload')
-
 #_______________________________________________________________________________________________________________
 
 # @app.route("/about", methods=["GET", "POST"])

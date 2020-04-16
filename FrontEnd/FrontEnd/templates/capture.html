@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <body>
+  	<center>
+      <div id="camera">
+	     <img src="{{ url_for('static', filename=path) }}" alt="capture">
+      </div>
+      <div id="input-hidden">
+        </form>
+      </div>
+      <div id="btns-div">
+        <a href="{{ url_for('index') }}">
+          <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
+        </a>
+        <a href="{{ url_for('static', filename=path) }}" download>
+          <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" class="btn">
+        </a>
+      </div>
+		</center>
+  </body>
+
+{% endblock content %}
