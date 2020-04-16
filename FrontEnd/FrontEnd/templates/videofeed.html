@@ -1,8 +1,0 @@
-{% extends "layout.html" %}
-{% block content %}
-{%if session['logged_in'] %}
-    <img src="{{ url_for('video_feed') }}">
-{% else %}
-    Please Login.
-{% endif %}
-{% endblock content %}
