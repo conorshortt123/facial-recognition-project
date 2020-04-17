@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+{%if session['logged_in'] %}
+    <form method="POST" action="{{url_for('home')}}">
+        <input type="text" name="UserName">
+        <input type="submit">
+    </form>
+    {%if user %}
+    {% for item in user%}
+    <tr>
+        <td>{{item}}</td>
+        <br>
+    </tr>
+    {% endfor %}
+    {% endif %}
+{% else %}
+    Please Login.
+{% endif %}
+{% endblock content %}

@@ -8,6 +8,7 @@ import numpy as np
 import face_recognition
 from bson.binary import Binary
 import pickle
+from PIL import Image
 
 # Initialize some variables
 outputFrame = None
@@ -143,6 +144,7 @@ def decodeNumpyToImage(encoded_image):
 def decodeBinaryToNumpy(bArray):
 
 	image_encoding = pickle.loads(bArray)
+	return image_encoding
 
 	return image_encoding
 
