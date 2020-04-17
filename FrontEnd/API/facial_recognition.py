@@ -134,7 +134,8 @@ def encodeImageNumpy(image):
 
 def decodeNumpyToImage(encoded_image):
 
-	image = Image.fromarray(encoded_image)
+	numpy = decodeBinaryToNumpy(encoded_image)
+	image = Image.fromarray(numpy)
 
 	return image
 
@@ -142,6 +143,8 @@ def decodeNumpyToImage(encoded_image):
 def decodeBinaryToNumpy(bArray):
 
 	image_encoding = pickle.loads(bArray)
+
+	return image_encoding
 
 
 def compareImages(image_encoding1, image_encoding2):

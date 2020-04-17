@@ -10,6 +10,9 @@
           <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn">
         </a>
       </div>
+      <div>
+        User: {{ form['username'] }}
+      </div>
     </center>
   </body>
 {% endblock content %}

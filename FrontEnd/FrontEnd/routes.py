@@ -12,6 +12,7 @@ sys.path.insert(1, './API')
 from facial_recognition import encodeImageBinary, encodeImageNumpy
 
 camera = None
+credsVerified = False
 
 def get_camera():
     global camera
@@ -72,21 +73,33 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+
+    global credsVerified
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if request.method == 'POST':
         if verify_credentials(request.form['username'], request.form['password']):
-            session['logged_in'] = True
-            session['current_user'] = form.username.data
-            flash('You are now logged in!', 'success')
-            return redirect(url_for('home'))
+            #session['logged_in'] = True
+            #session['current_user'] = form.username.data
+            #flash('You are now logged in!', 'success')
+            #return redirect(url_for('home'))
+            #return redirect(url_for('index', form={'user':'conor'}))
+            if not credsVerified:
+                credsVerified = True
+                return render_template('camera.html', form=form)
+            else:
+                checkFace()
         else:
             error = 'Invalid credentials. Please try again.'
             flash('Login Unsuccessful. Please check Email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-#_______________________________________________________________________________________________________________
+
+def checkFace():
+    print("Checking face")
+
 
 @app.route("/logout")
 @login_required
