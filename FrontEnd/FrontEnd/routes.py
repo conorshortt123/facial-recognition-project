@@ -39,11 +39,6 @@ def home():
 def index():
     return render_template('camera.html')
 
-@app.route("/search")
-def search():
-    return render_template('search.html', title='Search')
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     error = None
@@ -53,7 +48,7 @@ def register():
     if request.method == 'POST':
         binary_encoding = encodeImageBinary(form.image.data)
 
-        success = add_new_user(form.username.data, 
+        success = add_new_user(form.username.data,
                                request.form['password'],
                                form.email.data,
                                binary_encoding)
