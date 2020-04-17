@@ -9,9 +9,10 @@ import os
 import shutil
 from functools import wraps
 sys.path.insert(1, './API')
-from facial_recognition import encodeImageBinary
+from facial_recognition import encodeImageBinary, encodeImageNumpy
 
 camera = None
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def get_camera():
     global camera
@@ -51,9 +52,12 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     if request.method == 'POST':
-        binary_encoding = encodeImageBinary(form.image.data)
+        print(form.image.data)
+        imagefile = request.files['image']
+        print(imagefile)
+        binary_encoding = encodeImageBinary(imagefile)
 
-        success = add_new_user(form.username.data, 
+        success = add_new_user(form.username.data,
                                request.form['password'],
                                form.email.data,
                                binary_encoding)
@@ -65,8 +69,6 @@ def register():
             error = 'Username already exists'
     return render_template('register.html', title='Register', form=form)
 
-  
-#_______________________________________________________________________________________________________________
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -93,12 +95,12 @@ def logout():
     session['logged_in'] = False
     return redirect(url_for('home'))
 
-#_______________________________________________________________________________________________________________
 
 @app.route("/account")
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
 
 def gen(camera):
     while True:
@@ -106,11 +108,13 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+
 @app.route('/video_feed/')
 def video_feed():
     camera = get_camera()
     return Response(gen(camera),
         mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route('/capture/')
 def capture():
@@ -119,16 +123,30 @@ def capture():
     print("STAMP = " + stamp)
     return redirect(url_for('show_capture', timestamp=stamp))
 
-def stamp_file(timestamp):
-    return 'captures/' + timestamp +".jpg"
 
 @app.route('/capture/image/<timestamp>', methods=['POST', 'GET'])
 def show_capture(timestamp):
-    path = stamp_file(timestamp)
+    #path = stamp_file(timestamp)
+    path = "captures/" + timestamp + ".jpg"
     print("PATH = " + path)
 
     return render_template('capture.html',
         stamp=timestamp, path=path)
+
+@app.route('/training/face/upload', methods=['POST'])
+def face_upload():
+    target = os.path.join(APP_ROOT, 'face-images/')  #folder path
+    if not os.path.isdir(target):
+            os.mkdir(target)     # create folder if not exits
+    face_db_table = d.mongo.db.faces  # database table name
+    if request.method == 'POST':
+        for upload in request.files.getlist("face_image"): #multiple image handel
+            filename = secure_filename(upload.filename)
+            destination = "/".join([target, filename])
+            upload.save(destination)
+            face_db_table.insert({'face_image': filename})   #insert into database mongo db
+
+        return 'Image Upload Successfully'
 
 #_______________________________________________________________________________________________________________
 #_______________________________________________________________________________________________________________

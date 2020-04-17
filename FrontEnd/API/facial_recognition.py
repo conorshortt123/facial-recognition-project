@@ -118,6 +118,13 @@ def encodeImageBinary(image):
 	return bArray
 
 
+def encodeImageFaceRec(image):
+
+	image_file = face_recognition.load_image_file(image)
+	image_encoding = face_recognition.face_encodings(image_file)[0]
+
+	return image_encoding
+
 def encodeImageNumpy(image):
 
 	image_file = face_recognition.load_image_file(image)
@@ -125,8 +132,15 @@ def encodeImageNumpy(image):
 
 	return image_encoding
 
+def decodeImageNumpy(image):
 
-def decodeBinaryToNumpy(bArray):
+	image_file = face_recognition.load_image_file(image)
+	image_encoding = face_recognition.face_encodings(image_file)[0]
+
+	return image_encoding
+
+
+def decodeBinaryToFaceRec(bArray):
 
 	image_encoding = pickle.loads(bArray)
 
