@@ -53,8 +53,12 @@ def register():
         numpy_encoding = encodeImageNumpy(imagefile)
 
         success = add_new_user(form.username.data,
-                               request.form['password'],
-                               form.email.data,
+                               form.firstName.data,
+                               form.secondName.data,
+                               form.address.data,
+                               form.MobileNum.data,         
+                               request.form['password'],                                                    
+                               form.email.data,         
                                binary_encoding,
                                numpy_encoding)
         if success:

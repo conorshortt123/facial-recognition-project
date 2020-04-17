@@ -17,13 +17,17 @@ u_coll = db.users
 def load_user(user_id):
     return add_new_user.u_coll.find(int(user_id))
 
-def add_new_user(username,password, email, Image, npArray):
+def add_new_user(username,firstName,secondName,address,mobileNumber,password, email, Image,npArray):
     print(password)
     if not u_coll.find_one({'username': username}):
         #hashed = hashpw(password.encode('utf8'),gensalt(12))
         hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         user = {
             "username": username,
+            "firstName": firstName,
+            "secondName": secondName,
+            "address": address,
+            "mobileNumber": mobileNumber,
             "hash": hashed,
             "email": email,
             "FaceRecArray":Image,
