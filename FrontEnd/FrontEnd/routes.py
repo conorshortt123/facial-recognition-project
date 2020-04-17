@@ -1,9 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
 from flask_login import login_user, current_user, logout_user, login_required
 from FrontEnd import app, bcrypt
-from FrontEnd.forms import RegistrationForm, LoginForm
+from FrontEnd.forms import RegistrationForm, LoginForm ,searchForm
 from FrontEnd.camera import Camera
-from Backend.server import add_new_user, verify_credentials
+from Backend.server import add_new_user, verify_credentials,retrieveDetails
 import sys
 import os
 import shutil
@@ -31,8 +31,16 @@ def login_required(f):
     return wrap
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home",methods=['GET','POST'])
 def home():
+    error = None
+    if request.method == 'POST':
+        username = request.form.get('UserName')
+        username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+        print(username,firstName,secondName,address,email,mobileNumber,Image)
+        
+        Data = [username,firstName,secondName,address,email,mobileNumber,Image]       
+        return render_template('home.html',user = Data)
     return render_template('home.html')
 
 @app.route('/camera/')
