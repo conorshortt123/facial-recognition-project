@@ -40,11 +40,6 @@ def home():
 def index():
     return render_template('camera.html')
 
-@app.route("/search")
-def search():
-    return render_template('search.html', title='Search')
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     error = None
