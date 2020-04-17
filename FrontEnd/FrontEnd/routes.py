@@ -47,15 +47,17 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     if request.method == 'POST':
-        print(form.image.data)
-        imagefile = request.files['image']
-        print(imagefile)
+
+        # Encoding image to face recognition array, and numpy array to be stored in database.
+        imagefile = form.image.data
         binary_encoding = encodeImageBinary(imagefile)
+        numpy_encoding = encodeImageNumpy(imagefile)
 
         success = add_new_user(form.username.data,
                                request.form['password'],
                                form.email.data,
-                               binary_encoding)
+                               binary_encoding,
+                               numpy_encoding)
         if success:
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('home'))
