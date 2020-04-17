@@ -10,6 +10,14 @@ images = UploadSet('images', IMAGES)
 class RegistrationForm(FlaskForm):
     username = StringField('Username', 
                             validators=[DataRequired(), Length(min=2, max=20)])
+    firstName = StringField('First name', 
+                        validators=[DataRequired()])
+    secondName = StringField('Second name', 
+                    validators=[DataRequired()])
+    address = StringField('Address', 
+                validators=[DataRequired()])
+    MobileNum = StringField('Mobile Number', 
+            validators=[DataRequired()])
     email = StringField('Email',
                             validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

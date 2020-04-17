@@ -53,8 +53,12 @@ def register():
         binary_encoding = encodeImageBinary(imagefile)
 
         success = add_new_user(form.username.data,
-                               request.form['password'],
-                               form.email.data,
+                               form.firstName.data,
+                               form.secondName.data,
+                               form.address.data,
+                               form.MobileNum.data,         
+                               request.form['password'],                                                    
+                               form.email.data,         
                                binary_encoding)
         if success:
             flash('Your account has been created! You are now able to log in', 'success')
