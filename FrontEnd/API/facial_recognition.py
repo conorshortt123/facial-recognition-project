@@ -128,19 +128,18 @@ def encodeImageFaceRec(image):
 def encodeImageNumpy(image):
 
 	image_file = face_recognition.load_image_file(image)
-	image_encoding = face_recognition.face_encodings(image_file)[0]
+	bArray = Binary(pickle.dumps(image_file, protocol=2), subtype=128)
 
-	return image_encoding
+	return bArray
 
-def decodeImageNumpy(image):
+def decodeNumpyToImage(encoded_image):
 
-	image_file = face_recognition.load_image_file(image)
-	image_encoding = face_recognition.face_encodings(image_file)[0]
+	image = Image.fromarray(encoded_image)
 
-	return image_encoding
+	return image
 
 
-def decodeBinaryToFaceRec(bArray):
+def decodeBinaryToNumpy(bArray):
 
 	image_encoding = pickle.loads(bArray)
 

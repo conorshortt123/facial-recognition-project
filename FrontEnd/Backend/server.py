@@ -17,7 +17,7 @@ u_coll = db.users
 def load_user(user_id):
     return add_new_user.u_coll.find(int(user_id))
 
-def add_new_user(username,firstName,secondName,address,mobileNumber,password, email, Image):
+def add_new_user(username,firstName,secondName,address,mobileNumber,password, email, Image,npArray):
     print(password)
     if not u_coll.find_one({'username': username}):
         #hashed = hashpw(password.encode('utf8'),gensalt(12))
@@ -30,7 +30,8 @@ def add_new_user(username,firstName,secondName,address,mobileNumber,password, em
             "mobileNumber": mobileNumber,
             "hash": hashed,
             "email": email,
-            "Image":Image
+            "FaceRecArray":Image,
+            "NumpyArray":npArray
         }
         u_coll.insert(user)
         return True
