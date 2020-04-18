@@ -189,19 +189,3 @@ def show_capture(timestamp):
     return render_template('capture.html',
         stamp=timestamp, path=path)
 
-#_______________________________________________________________________________________________________________
-#_______________________________________________________________________________________________________________
-
-# @app.route("/about", methods=["GET", "POST"])
-# def search():
-    
-    
-#     print("DEBUGGING:1")
-#     if request.method == 'POST':
-#         email = request.form['text']
-#         userName , userEmail , profilePic = retrieveDetails(email)
-#         print("DEBUGGING:4")
-#         return render_template('search.html',userName,userEmail,profilePic)
-    
-#     print("DEBUGGING:3")
-#     return render_template('search.html')

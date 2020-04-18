@@ -1,17 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-  <body>
-    <center>
-      <div id="camera">
-        <img src="{{ url_for('video_feed') }}" alt="video feed">
-      </div>
-      <div id="btns-div">
-        <a href="{{ url_for('capture') }}">
-          <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn">
-        </a>
-      </div>
-      <div>
-      </div>
-    </center>
-  </body>
+<body>
+  <center>
+    <div id="camera">
+      <img src="{{ url_for('video_feed') }}" alt="video feed">
+    </div>
+    <div id="btns-div">
+      <a href="{{ url_for('capture') }}">
+        <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn">
+      </a>
+    </div>
+  </center>
+</body>
 {% endblock content %}
