@@ -41,7 +41,7 @@ def home():
     error = None
     if request.method == 'POST':
         username = request.form.get('UserName')
-        username,firstName,secondName,address,email,mobileNumber,Image,numpy = retrieveDetails(username)
+        username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
         print(username,firstName,secondName,address,email,mobileNumber,Image)
         
         Data = [username,firstName,secondName,address,email,mobileNumber]

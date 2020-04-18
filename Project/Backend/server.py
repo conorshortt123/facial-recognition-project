@@ -65,7 +65,6 @@ def retrieveDetails(searchusername):
         print(result['username'])
     
     image = result['Image']
-    numpy = result['NumpyArray']
     userName = result['username']
     firstName = result['firstName']
     secondName = result['secondName']
@@ -74,4 +73,15 @@ def retrieveDetails(searchusername):
     mobileNum = result['mobileNumber']
     print(userName,firstName,secondName,address,email,mobileNum)
     
-    return userName,firstName,secondName,address,email,mobileNum,image,numpy
+    return userName,firstName,secondName,address,email,mobileNum,image
+
+
+
+def retrieveNumpy(searchusername):
+    results = collection.find({"username": searchusername})
+    for result in results:
+        print(result['username'])
+
+    numpy = result['NumpyArray']
+
+    return numpy
