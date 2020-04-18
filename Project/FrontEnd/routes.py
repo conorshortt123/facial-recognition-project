@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from FrontEnd import app, bcrypt
 from FrontEnd.forms import RegistrationForm, LoginForm ,searchForm
 from FrontEnd.camera import Camera
-from Backend.server import add_new_user, verify_credentials,retrieveDetails
+from Backend.server import add_new_user, verify_credentials,retrieveDetails, retrieveNumpy
 import sys
 import os
 import shutil
@@ -16,6 +16,7 @@ from PIL import Image
 
 camera = None
 credsVerified = False
+username = ""
 CAPTURES_DIR = "./Frontend/static/captures/"
 
 def get_camera():
@@ -88,22 +89,20 @@ def register():
 def login():
 
     global credsVerified
+    global username
 
+    if username:
+        print(username)
+        checkface(username)
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if request.method == 'POST':
+        username = request.form['username']
         if verify_credentials(request.form['username'], request.form['password']):
-            #session['logged_in'] = True
-            #session['current_user'] = form.username.data
-            #flash('You are now logged in!', 'success')
-            #return redirect(url_for('home'))
-            #return redirect(url_for('index', form={'user':'conor'}))
+
             if not credsVerified:
-                credsVerified = True
                 return render_template('camera.html')
-            else:
-                checkFace(request.form['username'])
         else:
             error = 'Invalid credentials. Please try again.'
             flash('Login Unsuccessful. Please check Email and password', 'danger')
@@ -111,7 +110,7 @@ def login():
 
 
 @app.route("/checkface", methods=['GET', 'POST'])
-def checkface(username):
+def checkface(user):
     try:
         # Open image taken while logging in.
         img_name = 'test.jpg'
@@ -119,20 +118,25 @@ def checkface(username):
 
         # Encode login image
         img1 = encodeImageFaceRec(img)
+        print(img1)
 
         # Get registered image from database and decode from binary to numpy
-        userDetails = retrieveDetails(username)
+        knownFace = retrieveNumpy(user)
 
-        knownFace = request.form['NumpyArray']
         img2 = decodeBinaryToNumpy(knownFace)
+        print(img2)
 
         # Compare two numpy arrays
         result = compareImages(img1, img2)
 
         if result:
-            print("It's a match")
+            session['logged_in'] = True
+            session['current_user'] = user
+            flash('You are now logged in!', 'success')
         else:
-            print("Faces didn't match")
+            flash("Faces didn't match", 'error')
+
+        return redirect(url_for('home'))
 
     except IOError:
         print("Couldn't open image")

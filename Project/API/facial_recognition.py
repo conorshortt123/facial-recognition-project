@@ -113,7 +113,7 @@ def recognize_face():
 
 def encodeByteToBase64(image):
 	# Open img with PIL
-	img = Image.open(image)
+	im = Image.open(image)
 
 	# Create bytesio object and save image
 	bytesio = io.BytesIO()
@@ -144,7 +144,8 @@ def encodeImageFaceRec(image):
 def encodeImageNumpy(image):
 
 	image_file = face_recognition.load_image_file(image)
-	bArray = Binary(pickle.dumps(image_file, protocol=2), subtype=128)
+	image_encoding = face_recognition.face_encodings(image_file)[0]
+	bArray = Binary(pickle.dumps(image_encoding, protocol=2), subtype=128)
 
 	return bArray
 
@@ -166,6 +167,6 @@ def decodeBinaryToNumpy(bArray):
 
 def compareImages(image_encoding1, image_encoding2):
 
-	result = face_recognition.compare_faces([image_encoding1, image_encoding2])
+	result = face_recognition.compare_faces([image_encoding1], image_encoding2)
 
 	return result

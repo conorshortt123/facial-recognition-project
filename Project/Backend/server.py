@@ -34,7 +34,7 @@ def add_new_user(username,firstName,secondName,address,mobileNumber,password, em
             "mobileNumber": mobileNumber,
             "hash": hashed,
             "email": email,
-            "FaceRecArray":Image,
+            "b64Array":Image,
             "NumpyArray":npArray
         }
         collection.insert(user);
