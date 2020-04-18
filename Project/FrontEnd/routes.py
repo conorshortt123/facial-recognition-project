@@ -132,13 +132,14 @@ def checkface(user):
 
         # Compare two numpy arrays
         result = compareImages(img1, img2)
+        print(result[0])
 
-        if result:
+        if result[0]:
             session['logged_in'] = True
             session['current_user'] = user
             flash('You are now logged in!', 'success')
         else:
-            flash("Faces didn't match", 'error')
+            flash("Faces didn't match, please log in again.", 'error')
 
         return redirect(url_for('home'))
 
