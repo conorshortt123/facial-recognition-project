@@ -9,6 +9,8 @@ import face_recognition
 from bson.binary import Binary
 import pickle
 from PIL import Image
+import io
+from base64 import b64encode
 
 # Initialize some variables
 outputFrame = None
@@ -109,6 +111,19 @@ def recognize_face():
 			outputFrame = frame.copy()
 
 
+def encodeByteToBase64(image):
+	# Open img with PIL
+	img = Image.open(image)
+
+	# Create bytesio object and save image
+	bytesio = io.BytesIO()
+	im.save(bytesio, 'jpeg')
+
+	# Encode image to base 64 and return.
+	b64img = b64encode(bytesio.getvalue())
+
+	return b64img
+
 def encodeImageBinary(image):
 
 	image_file = face_recognition.load_image_file(image)
@@ -144,6 +159,8 @@ def decodeNumpyToImage(encoded_image):
 def decodeBinaryToNumpy(bArray):
 
 	image_encoding = pickle.loads(bArray)
+	return image_encoding
+
 	return image_encoding
 
 
