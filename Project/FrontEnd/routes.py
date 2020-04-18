@@ -10,7 +10,7 @@ import shutil
 from PIL import Image
 from functools import wraps
 sys.path.insert(1, './API')
-from facial_recognition import encodeImageBinary, encodeImageNumpy
+from facial_recognition import encodeImageBinary, encodeImageNumpy,encodeByteToBase64
 
 from PIL import Image
 
@@ -44,9 +44,9 @@ def home():
         username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
         print(username,firstName,secondName,address,email,mobileNumber,Image)
         
-        Data = [username,firstName,secondName,address,email,mobileNumber,Image]  
-        Image.show()     
-        return render_template('home.html',user = Data)
+        Data = [username,firstName,secondName,address,email,mobileNumber]
+          
+        return render_template('home.html',user = Data,Image = Image)
     return render_template('home.html')
 
 @app.route('/camera/')
@@ -63,7 +63,7 @@ def register():
 
         # Encoding image to face recognition array, and numpy array to be stored in database.
         imagefile = form.image.data
-        binary_encoding = encodeImageBinary(imagefile)
+        binary_encoding = encodeByteToBase64(imagefile)
         numpy_encoding = encodeImageNumpy(imagefile)
 
         success = add_new_user(form.username.data,
