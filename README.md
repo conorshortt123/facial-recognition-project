@@ -18,7 +18,7 @@ Professional Practice in IT project repository --- Third Yr Sm 2.</br>
 ### Prerequisites
 
 [Project dependencies](https://github.com/conorshortt123/facial-recognition-project/blob/master/requirements.txt) - run 'pip install -r requirements.txt' in command prompt in the file directory <br>
-[python](https://www.python.org/downloads/)
+Latest Verison of [python](https://www.python.org/downloads/)
 
 ## Running the Program
 
