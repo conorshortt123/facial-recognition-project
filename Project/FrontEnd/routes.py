@@ -11,6 +11,8 @@ from functools import wraps
 sys.path.insert(1, './API')
 from facial_recognition import encodeImageBinary, encodeImageNumpy
 
+from PIL import Image
+
 camera = None
 
 def get_camera():
@@ -39,7 +41,8 @@ def home():
         username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
         print(username,firstName,secondName,address,email,mobileNumber,Image)
         
-        Data = [username,firstName,secondName,address,email,mobileNumber,Image]       
+        Data = [username,firstName,secondName,address,email,mobileNumber,Image]  
+        Image.show()     
         return render_template('home.html',user = Data)
     return render_template('home.html')
 
