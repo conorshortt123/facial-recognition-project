@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 {%if session['logged_in'] %}
+    <h1>Greetings {{session['current_user']}}</h1>
+
     <form align="right" method="POST" action="{{url_for('home')}}">
         <input type="text" name="UserName">
         <input type="submit">
     </form>
     {%if user %}
     <img height="500" width="250" src="data:Image/png;base64,{{Image}}" alt="Profile Picture" >
-    <h1>{{user[1]}} {{user[2]}}</h1>
+    <h2>{{user[1]}} {{user[2]}}</h2>
     <p align ="center">
     <hr>
     {{user[0]}}
