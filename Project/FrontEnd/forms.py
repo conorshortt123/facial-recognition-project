@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 
 images = UploadSet('images', IMAGES)
 
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', 
                             validators=[DataRequired(), Length(min=2, max=20)])
@@ -27,10 +28,12 @@ class RegistrationForm(FlaskForm):
                                 FileAllowed(images, 'Images only!')])
     submit = SubmitField('Sign up')
 
+
 class searchForm(FlaskForm):
     username = StringField('Username', 
                             validators=[DataRequired(), Length(min=2, max=20)])
-    
+
+
 class LoginForm(FlaskForm):
     username = StringField('Username',
                             validators=[DataRequired()])

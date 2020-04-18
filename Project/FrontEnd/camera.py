@@ -2,6 +2,8 @@ import cv2 as cv
 import os
 from time import localtime, strftime
 
+global timestamp
+
 
 class Camera(object):
     CAPTURES_DIR = "./Frontend/static/captures/"
@@ -29,8 +31,9 @@ class Camera(object):
             return jpeg.tobytes()
 
     def capture(self):
+        global timestamp
         frame = self.get_frame()
-        timestamp = "test"
+        timestamp = strftime("%d-%m-%Y-%Hh%Mm%Ss", localtime())
         filename = Camera.CAPTURES_DIR + timestamp +".jpg"
 
         if not cv.imwrite(filename, frame):
@@ -39,6 +42,6 @@ class Camera(object):
 
 
 def remove_pic():
-    timestamp = "test"
+    global timestamp
     filename = Camera.CAPTURES_DIR + timestamp + ".jpg"
     os.remove(filename)

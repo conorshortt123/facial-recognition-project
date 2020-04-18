@@ -11,13 +11,12 @@ from PIL import Image
 from functools import wraps
 sys.path.insert(1, './API')
 from facial_recognition import encodeImageBinary, encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, compareImages, encodeByteToBase64
-
 from PIL import Image
 
+global path
 camera = None
-credsVerified = False
 username = ""
-CAPTURES_DIR = "./Frontend/static/captures/"
+CAPTURES_DIR = "./Frontend/static/"
 
 def get_camera():
     global camera
@@ -47,9 +46,10 @@ def home():
         
         Data = [username,firstName,secondName,address,email,mobileNumber]
         
-        Image = Image.decode('utf-8')
-        
-        return render_template('home.html',user = Data,Image = Image)
+        if Image is not None:
+            Image = Image.decode('utf-8')   
+            return render_template('home.html',user = Data,Image = Image)
+    
     return render_template('home.html')
 
 
@@ -84,7 +84,7 @@ def register():
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Username ' + form.username.data + ' already exists, Please try alternative Username')
+            flash('Username ' + form.username.data + ' already exists, Please try alternative Username', 'danger')
             error = 'Username already exists'
     return render_template('register.html', title='Register', form=form)
 
@@ -92,11 +92,9 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 
-    global credsVerified
     global username
 
     if username:
-        print(username)
         checkface(username)
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -104,9 +102,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         if verify_credentials(request.form['username'], request.form['password']):
-
-            if not credsVerified:
-                return render_template('camera.html')
+            return render_template('camera.html')
         else:
             error = 'Invalid credentials. Please try again.'
             flash('Login Unsuccessful. Please check Email and password', 'danger')
@@ -117,16 +113,15 @@ def login():
 def checkface(user):
     try:
         # Open image taken while logging in.
-        img_name = 'test.jpg'
-        img = CAPTURES_DIR + img_name
+        img = CAPTURES_DIR + path
 
         # Encode login image
         img1 = encodeImageFaceRec(img)
         print(img1)
 
         # Get registered image from database and decode from binary encoding to numpy
-        knownFace = retrieveNumpy(user)
-        img2 = decodeBinaryToNumpy(knownFace)
+        known_face = retrieveNumpy(user)
+        img2 = decodeBinaryToNumpy(known_face)
 
         # Compare two numpy arrays
         result = compareImages(img1, img2)
@@ -183,31 +178,14 @@ def video_feed():
 def capture():
     camera = get_camera()
     stamp = camera.capture()
-    print("STAMP = " + stamp)
     return redirect(url_for('show_capture', timestamp=stamp))
 
 
 @app.route('/capture/image/<timestamp>', methods=['POST', 'GET'])
 def show_capture(timestamp):
+    global path
     path = "captures/" + timestamp + ".jpg"
-    print("PATH = " + path)
 
     return render_template('capture.html',
         stamp=timestamp, path=path)
 
-#_______________________________________________________________________________________________________________
-#_______________________________________________________________________________________________________________
-
-# @app.route("/about", methods=["GET", "POST"])
-# def search():
-    
-    
-#     print("DEBUGGING:1")
-#     if request.method == 'POST':
-#         email = request.form['text']
-#         userName , userEmail , profilePic = retrieveDetails(email)
-#         print("DEBUGGING:4")
-#         return render_template('search.html',userName,userEmail,profilePic)
-    
-#     print("DEBUGGING:3")
-#     return render_template('search.html')
