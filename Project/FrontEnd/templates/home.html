@@ -4,24 +4,103 @@
     <h1>Greetings {{session['current_user']}}</h1>
 
     <form align="right" method="POST" action="{{url_for('home')}}">
-        <input type="text" name="UserName">
-        <input type="submit">
+        
+        
+        <div class="input-group md-form form-sm form-2 pl-0">
+            <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search" name="UserName">
+            <div class="input-group-append">
+            <span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
+                aria-hidden="true"></i></span>
+                <input type="submit">
+            </div>
+        </div>
     </form>
     {%if user %}
-    <img height="500" width="250" src="data:Image/png;base64,{{Image}}" alt="Profile Picture" >
-    <h2>{{user[1]}} {{user[2]}}</h2>
-    <p align ="center">
-    <hr>
-    {{user[0]}}
-    <hr>
-    {{user[3]}}
-    <hr>
-    {{user[4]}}
-    <hr>
-    {{user[5]}}
-    <hr>
-    </p>
-
+    <div class="container bootstrap snippet">
+        <legend class="border-bottom mb-4">Account Information</legend>
+        <div class="panel-body inf-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="rounded-circle account-img" height="500" width="250" src="data:Image/png;base64,{{Image}}" alt="Profile Picture" >
+                </div>
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-user-information">
+                        <tbody>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        Name                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{ user[1] }}      
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                        Lastname                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{user[2]}}  
+                                </td>
+                            </tr>
+        
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Username                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{user[0]}} 
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                        Email                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{user[4]}}  
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Address                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{user[3]}}
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Mobile                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                  {{user[5]}}
+                                </td>
+                            </tr>                                    
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>                 
     {% endif %}
 {% else %}
     Please Login.

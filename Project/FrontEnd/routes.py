@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Response, 
 from flask_login import login_user, current_user, logout_user, login_required
 from FrontEnd import app, bcrypt
 from FrontEnd.forms import RegistrationForm, LoginForm ,searchForm
-from FrontEnd.camera import Camera
+from FrontEnd.camera import Camera, remove_pic
 from Backend.server import add_new_user, verify_credentials,retrieveDetails, retrieveNumpy
 import sys
 import os
@@ -135,6 +135,7 @@ def checkface(user):
         if result[0]:
             session['logged_in'] = True
             session['current_user'] = user
+            remove_pic()
             flash('You are now logged in!', 'success')
             return render_template('home.html')
         else:
@@ -155,7 +156,14 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    request.method == 'GET'
+    username = session['current_user']
+    username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+
+    Data = [username,firstName,secondName,address,email,mobileNumber]
+        
+    Image = Image.decode('utf-8')
+    return render_template('account.html', title='Account', user = Data,Image = Image)
 
 
 def gen(camera):
