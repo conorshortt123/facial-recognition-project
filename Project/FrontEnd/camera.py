@@ -1,5 +1,7 @@
 import cv2 as cv
+import os
 from time import localtime, strftime
+
 
 class Camera(object):
     CAPTURES_DIR = "./Frontend/static/captures/"
@@ -7,7 +9,7 @@ class Camera(object):
 
     def __init__(self):
         self.video = cv.VideoCapture(0)
-    
+
     def __del__(self):
         self.video.release()
 
@@ -16,7 +18,7 @@ class Camera(object):
         if not success:
             return None
 
-        if (Camera.RESIZE_RATIO != 1):
+        if Camera.RESIZE_RATIO != 1:
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, fy=Camera.RESIZE_RATIO)
         return frame
 
@@ -29,9 +31,14 @@ class Camera(object):
     def capture(self):
         frame = self.get_frame()
         timestamp = "test"
-
         filename = Camera.CAPTURES_DIR + timestamp +".jpg"
-        print("FILENAME = " + filename)
+
         if not cv.imwrite(filename, frame):
             raise RuntimeError("Unable to capture image "+timestamp)
         return timestamp
+
+
+def remove_pic():
+    timestamp = "test"
+    filename = Camera.CAPTURES_DIR + timestamp + ".jpg"
+    os.remove(filename)
