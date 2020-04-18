@@ -46,9 +46,10 @@ def home():
         
         Data = [username,firstName,secondName,address,email,mobileNumber]
         
-        Image = Image.decode('utf-8')
-        
-        return render_template('home.html',user = Data,Image = Image)
+        if Image is not None:
+            Image = Image.decode('utf-8')   
+            return render_template('home.html',user = Data,Image = Image)
+    
     return render_template('home.html')
 
 
@@ -83,7 +84,7 @@ def register():
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Username ' + form.username.data + ' already exists, Please try alternative Username')
+            flash('Username ' + form.username.data + ' already exists, Please try alternative Username', 'danger')
             error = 'Username already exists'
     return render_template('register.html', title='Register', form=form)
 
@@ -149,7 +150,14 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    request.method == 'GET'
+    username = session['current_user']
+    username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+
+    Data = [username,firstName,secondName,address,email,mobileNumber]
+        
+    Image = Image.decode('utf-8')
+    return render_template('account.html', title='Account', user = Data,Image = Image)
 
 
 def gen(camera):
