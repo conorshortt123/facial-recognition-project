@@ -1,13 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 {%if session['logged_in'] %}
-<<<<<<< HEAD
   <hr>
     <!--Searchbar used to get user information-->
-=======
-    <h1>Greetings {{session['current_user']}}</h1>
-
->>>>>>> 50e9fa2ae019887d423cb9e1bb8c9978a1dd171f
     <form align="right" method="POST" action="{{url_for('home')}}">
         <div class="input-group md-form form-sm form-2 pl-0">
             <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search Database" aria-label="Search" name="UserName">
