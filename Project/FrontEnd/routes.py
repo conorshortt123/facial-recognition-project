@@ -154,7 +154,14 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    request.method == 'GET'
+    username = session['current_user']
+    username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+
+    Data = [username,firstName,secondName,address,email,mobileNumber]
+        
+    Image = Image.decode('utf-8')
+    return render_template('account.html', title='Account', user = Data,Image = Image)
 
 
 def gen(camera):
