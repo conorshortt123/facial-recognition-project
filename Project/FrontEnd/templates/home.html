@@ -7,13 +7,18 @@
     </form>
     {%if user %}
     <h1>{{user[1]}} {{user[2]}}</h1>
+    <hr>
     {{user[0]}}
+    <hr>
     {{user[3]}}
+    <hr>
     {{user[4]}}
+    <hr>
     {{user[5]}}
-    {{user[6]}}
+    <hr>
+    <img="data:Image/jpeg;base64,{{Image}}" alt = "Profile Picture">
     </p>
-    <img src={{user[6]}}>
+
     {% endif %}
 {% else %}
     Please Login.

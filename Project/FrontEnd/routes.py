@@ -45,9 +45,9 @@ def home():
         username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
         print(username,firstName,secondName,address,email,mobileNumber,Image)
         
-        Data = [username,firstName,secondName,address,email,mobileNumber,Image]  
-        Image.show()     
-        return render_template('home.html',user = Data)
+        Data = [username,firstName,secondName,address,email,mobileNumber]
+          
+        return render_template('home.html',user = Data,Image = Image)
     return render_template('home.html')
 
 @app.route('/camera/')
