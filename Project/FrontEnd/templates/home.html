@@ -6,7 +6,9 @@
         <input type="submit">
     </form>
     {%if user %}
+    <img height="500" width="250" src="data:Image/png;base64,{{Image}}" alt="Profile Picture" >
     <h1>{{user[1]}} {{user[2]}}</h1>
+    <p align ="center">
     <hr>
     {{user[0]}}
     <hr>
@@ -16,7 +18,6 @@
     <hr>
     {{user[5]}}
     <hr>
-    <img height="500" width="250" src="data:Image/png;base64,{{Image}}" alt="Profile Picture" >
     </p>
 
     {% endif %}
