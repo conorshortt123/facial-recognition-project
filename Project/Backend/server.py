@@ -58,12 +58,13 @@ def verify_credentials(username,password_attempt):
         print ("Password Mismatch")
         return False
 
+
 def retrieveDetails(searchusername):
     results = collection.find({"username":searchusername})
     for result in results:
         print(result['username'])
     
-    image = decodeNumpyToImage(result['NumpyArray'])    
+    image = result['Image']
     userName = result['username']
     firstName = result['firstName']
     secondName = result['secondName']
@@ -73,3 +74,14 @@ def retrieveDetails(searchusername):
     print(userName,firstName,secondName,address,email,mobileNum)
     
     return userName,firstName,secondName,address,email,mobileNum,image
+
+
+
+def retrieveNumpy(searchusername):
+    results = collection.find({"username": searchusername})
+    for result in results:
+        print(result['username'])
+
+    numpy = result['NumpyArray']
+
+    return numpy
