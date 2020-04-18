@@ -64,16 +64,16 @@ def retrieveDetails(searchusername):
     for result in results:
         print(result['username'])
     
-    image = result['Image']
     userName = result['username']
     firstName = result['firstName']
     secondName = result['secondName']
     address = result['address']
     email = result['email']
     mobileNum = result['mobileNumber']
+    Image = result['b64Array']
     print(userName,firstName,secondName,address,email,mobileNum)
     
-    return userName,firstName,secondName,address,email,mobileNum,image
+    return userName,firstName,secondName,address,email,mobileNum,Image
 
 
 

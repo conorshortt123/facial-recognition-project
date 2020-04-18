@@ -43,12 +43,16 @@ def home():
     if request.method == 'POST':
         username = request.form.get('UserName')
         username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
-        print(username,firstName,secondName,address,email,mobileNumber,Image)
+        print(username,firstName,secondName,address,email,mobileNumber)
         
         Data = [username,firstName,secondName,address,email,mobileNumber]
-          
+        
+        Image = Image.decode('utf-8')
+        
         return render_template('home.html',user = Data,Image = Image)
     return render_template('home.html')
+
+
 
 @app.route('/camera/')
 def index():
