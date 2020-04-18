@@ -1,17 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
 {%if session['logged_in'] %}
-    <form method="POST" action="{{url_for('home')}}">
+    <form align="right" method="POST" action="{{url_for('home')}}">
         <input type="text" name="UserName">
         <input type="submit">
     </form>
     {%if user %}
-    {% for item in user%}
-    <tr>
-        <td>{{item}}</td>
-        <br>
-    </tr>
-    {% endfor %}
+    <h1>{{user[1]}} {{user[2]}}</h1>
+    {{user[0]}}
+    {{user[3]}}
+    {{user[4]}}
+    {{user[5]}}
+    {{user[6]}}
+    </p>
+    <img src={{user[6]}}>
     {% endif %}
 {% else %}
     Please Login.
