@@ -7,12 +7,14 @@ from Backend.server import add_new_user, verify_credentials,retrieveDetails
 import sys
 import os
 import shutil
+from PIL import Image
 from functools import wraps
 sys.path.insert(1, './API')
 from facial_recognition import encodeImageBinary, encodeImageNumpy
 
 camera = None
 credsVerified = False
+CAPTURES_DIR = "./Frontend/static/captures/"
 
 def get_camera():
     global camera
@@ -95,6 +97,7 @@ def login():
             #return redirect(url_for('home'))
             #return redirect(url_for('index', form={'user':'conor'}))
             if not credsVerified:
+                print("Creds not verified")
                 credsVerified = True
                 return render_template('camera.html', form=form)
             else:
@@ -104,9 +107,14 @@ def login():
             flash('Login Unsuccessful. Please check Email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-
-def checkFace():
-    print("Checking face")
+@app.route("/checkface", methods=['GET', 'POST'])
+def checkface():
+    try:
+        img_name = 'test.jpg'
+        img = Image.open(CAPTURES_DIR + img_name)
+        img.show()
+    except IOError:
+        print("Couldn't open image")
 
 
 @app.route("/logout")

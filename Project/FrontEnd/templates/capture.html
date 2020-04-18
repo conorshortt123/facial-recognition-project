@@ -6,15 +6,14 @@
       <div id="camera">
 	     <img src="{{ url_for('static', filename=path) }}" alt="capture">
       </div>
-      <div id="input-hidden">
-        </form>
-      </div>
       <div id="btns-div">
+          <b>Go Back</b>
         <a href="{{ url_for('index') }}">
-          <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
+          <img src="{{ url_for('static',filename='back.png') }}" alt="Go back" class="btn">
         </a>
-        <a href="{{ url_for('login', isCapped='True') }}">
-          <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" class="btn">
+          <b>Proceed</b>
+        <a href="{{ url_for('checkface') }}">
+          <img src="{{ url_for('static',filename='tick.png') }}" alt="Proceed" class="btn">
         </a>
       </div>
 		</center>
