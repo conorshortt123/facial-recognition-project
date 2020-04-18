@@ -10,7 +10,7 @@ import shutil
 from PIL import Image
 from functools import wraps
 sys.path.insert(1, './API')
-from facial_recognition import encodeImageBinary, encodeImageNumpy,encodeByteToBase64
+from facial_recognition import encodeImageBinary, encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, compareImages, encodeByteToBase64
 
 from PIL import Image
 
@@ -41,7 +41,7 @@ def home():
     error = None
     if request.method == 'POST':
         username = request.form.get('UserName')
-        username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+        username,firstName,secondName,address,email,mobileNumber,Image,numpy = retrieveDetails(username)
         print(username,firstName,secondName,address,email,mobileNumber,Image)
         
         Data = [username,firstName,secondName,address,email,mobileNumber]
@@ -100,22 +100,40 @@ def login():
             #return redirect(url_for('home'))
             #return redirect(url_for('index', form={'user':'conor'}))
             if not credsVerified:
-                print("Creds not verified")
                 credsVerified = True
-                return render_template('camera.html', form=form)
+                return render_template('camera.html')
             else:
-                checkFace()
+                checkFace(request.form['username'])
         else:
             error = 'Invalid credentials. Please try again.'
             flash('Login Unsuccessful. Please check Email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route("/checkface", methods=['GET', 'POST'])
-def checkface():
+def checkface(username):
     try:
+        # Open image taken while logging in.
         img_name = 'test.jpg'
-        img = Image.open(CAPTURES_DIR + img_name)
-        img.show()
+        img = CAPTURES_DIR + img_name
+
+        # Encode login image
+        img1 = encodeImageFaceRec(img)
+
+        # Get registered image from database and decode from binary to numpy
+        userDetails = retrieveDetails(username)
+
+        knownFace = request.form['NumpyArray']
+        img2 = decodeBinaryToNumpy(knownFace)
+
+        # Compare two numpy arrays
+        result = compareImages(img1, img2)
+
+        if result:
+            print("It's a match")
+        else:
+            print("Faces didn't match")
+
     except IOError:
         print("Couldn't open image")
 
