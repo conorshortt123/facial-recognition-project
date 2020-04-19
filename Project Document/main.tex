@@ -51,18 +51,6 @@ numberstyle = \tiny,
 
 \section{Introduction}
 
-\begin{lstlisting}[language = Java, caption=Hello World in Java, label=dfd]
-public class HelloWorld {
-
-}
-\end{lstlisting}
-
-Shown in \autoref{lstjava} is our main project code, give me an A? We see the GMIT logo in \autoref{fig:my_label}. I stole this code from \cite{helloworld}. For more information on public key cryptography as used in this project see \cite{al2003certificateless}.
-\lipsum
-
-\subsection{Why we did this project}
-
-\lipsum
 
 \section{System Requirements}
 In order to run the project, there are several requirements needed.
@@ -110,10 +98,23 @@ We used PIL to convert images to bytes then to base 64 so we can easily store it
 We used  \href{https://github.com/ageitgey}{Adam Geitgeys} \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} in our project for our two factor authentication when logging in.
 \end{enumerate}
 \section{Design Methodology}
+When starting our project we specified our language we would use, our end goals  and what imports we could use.
+\item	Goals \\
+When we began our project, we, as a team decided on some end goals for our project.  We chose that our project would be a web application made using Python that uses facial recognition when logging in in order to access a database containing all the user’s data.
+At first, we were caught between the Flask and Django framework. Ultimately, we chose flask because it’s a small and powerful web framework, it’s easy to learn, flexible and simple to use.
 
-\section{Features of the Implementation}
 
 \section{Limitations and known bugs}
+Throughout the course of making out project we encountered many bug and limitations but we gradually over came them and worked around them.
+\begin{enumerate}
+\item MongoDB
+When it came to connecting the MongoDB server, at first it would not connect and would throw errors whenever we tried to call from it. After several YouTube tutorials and after scrolling through several different stack overflow forums we figured it out and implemented the fixes. 
+\item Dlib
+With Dlib we found it tough to get it installed correctly. In the beginning we could not figure out to get it installed properly as it would keep throwing errors every time, we called it. In the end with some research and determination we eventually got Dlib correctly working on our systems
+\end{enumerate}
+
+
+\section{Features of the Implementation}
 
 \section{Testing Plans}
 
