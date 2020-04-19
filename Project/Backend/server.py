@@ -1,5 +1,3 @@
-from datetime import datetime
-from bcrypt import hashpw, gensalt
 from flask import flash
 import pymongo
 from pymongo import MongoClient

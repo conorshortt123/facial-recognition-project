@@ -1,10 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, IMAGES
-from werkzeug.utils import secure_filename
-
 
 images = UploadSet('images', IMAGES)
 

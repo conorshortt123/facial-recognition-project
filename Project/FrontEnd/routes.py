@@ -1,5 +1,5 @@
-from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import render_template, url_for, flash, redirect, request, Response, session
+from flask_login import current_user, logout_user
 from FrontEnd import app, bcrypt
 from FrontEnd.forms import RegistrationForm, LoginForm, searchForm
 from FrontEnd.camera import Camera, remove_pic
@@ -137,6 +137,12 @@ def login():
 
 @app.route("/checkface", methods=['GET', 'POST'])
 def checkface(user):
+    """
+    Checks the picture the user took when logging in against the face they registered with.
+
+    :param user: The username of the person logging in.
+    :return: Home.html if the login is successful, else they stay on the login page.
+    """
     try:
         # Open image taken while logging in.
         img = CAPTURES_DIR + path
