@@ -50,8 +50,20 @@ numberstyle = \tiny,
 
 
 \section{Introduction}
+For our 3rd year project for professional practice in IT, we decided to design a full stack web application which uses Facial recognition software to log into a web page which
+in turn allows the user to search a database to view other users information.\medskip
 
+For the Front-end portion we chose to use Flask which is a micro framework written in Python,we chose Flask because it is extremely flexible, relatively easy to learn and use, and allows for more control over what components to use such as the type of database.\medskip
 
+For the Back-end portion after a lot of research and testing for different ways to achieve communication between Front and Back end, the decision was made to use MongoDB.During the first few weeks we used Flask-SQLAlchemy but later changed to MongoDB which allowed the database to be accessed remotely by each project member.\medskip
+
+Our main objectives for the project were:
+\begin{enumerate}
+\item Have a working login system using facial recognition
+\item Improve communication skills in a project based environment 
+\item Learning new technologies
+\item Learning more about database communication
+\end{enumerate}
 \section{System Requirements}
 In order to run the project, there are several requirements needed.
 \begin{itemize}
@@ -79,7 +91,8 @@ We used python as our programming language as it has wide variety of libraries w
 We used Flask as our python framework for our web application. 
 Flask is a small and powerful web framework for Python. 
 It's easy to learn and simple to use, enabling you to build your web app in a short amount of time. Flask can be used for building complex, database-driven websites
-We chose flask due to its extensive documentation online so if we had issues we could easily find a soloution
+We chose flask due to its extensive documentation online so if we had issues we could easily find a solution to any problem.
+
 
 \item \href{https://www.mongodb.com/}{MongoDB} \\
 MongoDB is an open source database management system (DBMS) that uses a document-oriented database model which supports various forms of 
@@ -100,9 +113,10 @@ We used  \href{https://github.com/ageitgey}{Adam Geitgeys} \href{https://github.
 \section{Design Methodology}
 When starting our project we specified our language we would use, our end goals  and what imports we could use.
 \item	Goals \\
-When we began our project, we, as a team decided on some end goals for our project.  We chose that our project would be a web application made using Python that uses facial recognition when logging in in order to access a database containing all the user’s data.
-At first, we were caught between the Flask and Django framework. Ultimately, we chose flask because it’s a small and powerful web framework, it’s easy to learn, flexible and simple to use.
+When we began our project, we, as a team decided on some end goals for our project.  We chose that our project would be a web application made using Python that uses facial recognition when logging in, in order to access a database containing all the user’s data.
+At first, we were caught between the Flask and Django framework. Ultimately, we chose flask because it’s a small and powerful web framework, it’s easy to learn, flexible and simple to use.\medskip
 
+After deciding which framework we were going to use, we had to then chose which type of database was best to use with Flask. At the beginning we picked Flask-SQLAlchemy as it work very effectively and easily with Flask. After much consideration we decided that it would be best to change to using MongoDB because it would all the data in the database to be accessed remotely by each of us.
 
 \section{Limitations and known bugs}
 Throughout the course of making out project we encountered many bug and limitations but we gradually over came them and worked around them.
