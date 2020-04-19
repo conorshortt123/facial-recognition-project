@@ -7,7 +7,6 @@ from FrontEnd import login_manager
 from FrontEnd import bcrypt
 import sys
 sys.path.insert(1, './API')
-from facial_recognition import decodeNumpyToImage
     
 
 """Connecting to the MongoDB server.
