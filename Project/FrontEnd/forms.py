@@ -5,9 +5,13 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, IMAGES
 from werkzeug.utils import secure_filename
 
+
 images = UploadSet('images', IMAGES)
 
 
+#"""Create the registration form. 
+# Set requirements of certain fields. 
+#"""
 class RegistrationForm(FlaskForm):
     username = StringField('Username', 
                             validators=[DataRequired(), Length(min=2, max=20)])
@@ -29,11 +33,18 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign up')
 
 
+#"""Create the form for searching the
+# database. Set requirements
+#"""
 class searchForm(FlaskForm):
     username = StringField('Username', 
                             validators=[DataRequired(), Length(min=2, max=20)])
 
 
+#"""Create the Login form. 
+# Set the username and password
+# to be required.
+#"""
 class LoginForm(FlaskForm):
     username = StringField('Username',
                             validators=[DataRequired()])
