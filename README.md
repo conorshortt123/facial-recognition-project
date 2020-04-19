@@ -39,7 +39,7 @@ Once this verifies you are logged in and can procceed to search the database for
  Enter 'python3 run.py' 
  ```
 ```
- Go to '127.0.0.1/5000' on your web browser
+ Go to '127.0.0.1:5000' on your web browser
  ```
 
 ## Built With
