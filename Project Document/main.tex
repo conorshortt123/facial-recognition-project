@@ -68,8 +68,8 @@ Our main objectives for the project were:
 In order to run the project, there are several requirements needed.
 \begin{itemize}
   \item A webcam is required to use the App as when it comes to logging in you will be prompted to scan your face for two factor authentications.  You are also required to upload a self-portrait Image of yourself in order to register an account.
-  \item You are required to install the latest version of python 3. Link(https://www.python.org/downloads/)
-  \itemThe project decencies are required to run our application. To install them follow the steps below! 
+  \item You are required to install the latest version of \href{https://www.python.org/downloads/}{python 3.}
+  \item The project decencies are required to run our application. To install them follow the steps below! 
     \begin{enumerate}
     \item Clone the project to your desktop.
     \item Open the project and open command prompt
@@ -109,34 +109,78 @@ We used PIL to convert images to bytes then to base 64 so we can easily store it
 
 \item \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} \\
 We used  \href{https://github.com/ageitgey}{Adam Geitgeys} \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} in our project for our two factor authentication when logging in.
+\\
+\\
+\\
+\\
+\\
 \end{enumerate}
+
+
 \section{Design Methodology}
 When starting our project we specified our language we would use, our end goals  and what imports we could use.
+
 \item	Goals \\
 When we began our project, we, as a team decided on some end goals for our project.  We chose that our project would be a web application made using Python that uses facial recognition when logging in, in order to access a database containing all the user’s data.
 At first, we were caught between the Flask and Django framework. Ultimately, we chose flask because it’s a small and powerful web framework, it’s easy to learn, flexible and simple to use.\medskip
 
-After deciding which framework we were going to use, we had to then chose which type of database was best to use with Flask. At the beginning we picked Flask-SQLAlchemy as it work very effectively and easily with Flask. After much consideration we decided that it would be best to change to using MongoDB because it would all the data in the database to be accessed remotely by each of us.
+After deciding which framework we were going to use, we had to then chose which type of database was best to use with Flask. At the beginning we picked Flask-SQLAlchemy as it work very effectively and easily with Flask. After much consideration we decided that it would be best to change to using MongoDB because it would allow all the data in the database to be accessed remotely by each of us.
 
 \section{Limitations and known bugs}
 Throughout the course of making out project we encountered many bug and limitations but we gradually over came them and worked around them.
 \begin{enumerate}
-\item MongoDB
+\item MongoDB \\
 When it came to connecting the MongoDB server, at first it would not connect and would throw errors whenever we tried to call from it. After several YouTube tutorials and after scrolling through several different stack overflow forums we figured it out and implemented the fixes. 
-\item Dlib
+\item Dlib \\
 With Dlib we found it tough to get it installed correctly. In the beginning we could not figure out to get it installed properly as it would keep throwing errors every time, we called it. In the end with some research and determination we eventually got Dlib correctly working on our systems
-\end{enumerate}
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
 
+\end{enumerate}
 
 \section{Features of the Implementation}
 
+There are several features available in our project.
+\begin{enumerate}
+    \item A Register system that requires several details such as the username and stores the details to a database.
+    Due to our databases primary key being the username, they must all be different.
+    \item A Login system that validates the Users Username and password by checking if they match the records in the database
+    \item A Login / Logout system that allows the current user of a session to logout once logged in to allow another user to log in on the same device!
+    \item A search bar that allows the user to search through the database  via username and retrieve the users profile.
+    This contains their profile photo , username and email.
+    \item An account button that allows the current user to view their own profile.
+
+\end{enumerate}
+
+
 \section{Testing Plans}
+
+When it came to testing out our App we used mostly white box testing where the tester knows the internals of the code being tested and a small bit of black box testing where the tester knows nothing of the internals of the code.
+\\
+\\
+White box testing allowed us to test our code faster and more efficiently but black box testing proved useful as it gave us the opinion of an outside source  , helping us get more ideas and opinions and allowed us to see if our app is ergonomic to a wide range of users and easy to navigate through.
 
 \section{Recommendations for Future Development}
 
 \subsection{Current State of the Software}
 
 \section{Conclusions}
+
+\section{References}
+\begin{itemize}
+    \item \href{https://github.com/ageitgey}{Adam Geitgeys} - Facial recognition module
+    \item \href{https://pillow.readthedocs.io/en/stable/}{PIL} 
+    \item \href{https://www.python.org/downloads/}{Python}
+    \item \href{https://cmake.org/}{Cmake}  
+    \item \href{http://dlib.net/}{Dlib} 
+\end{itemize}
+
 
 \newpage
 \printbibliography
