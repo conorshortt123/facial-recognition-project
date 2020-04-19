@@ -35,8 +35,7 @@ class RegistrationForm(FlaskForm):
  database. Set requirements
 """
 class searchForm(FlaskForm):
-    username = StringField('Username', 
-                            validators=[DataRequired(), Length(min=2, max=20)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
 
 
 """Create the Login form. 
