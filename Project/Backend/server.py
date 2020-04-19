@@ -1,5 +1,3 @@
-from datetime import datetime
-from bcrypt import hashpw, gensalt
 from flask import flash
 import pymongo
 from pymongo import MongoClient
@@ -7,7 +5,6 @@ from FrontEnd import login_manager
 from FrontEnd import bcrypt
 import sys
 sys.path.insert(1, './API')
-from facial_recognition import decodeNumpyToImage
     
 
 """Connecting to the MongoDB server.

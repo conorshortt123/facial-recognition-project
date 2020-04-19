@@ -1,119 +1,140 @@
+<!-- Code from layout.html because of one minor change on line 48 for design feature-->
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Get stylesheet in static folder called main.css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
+    <!-- Set title on the tab -->
     {% if title %}
-        <title>Facial Recognition - {{ title }}</title>
+    <title>Facial Recognition - {{ title }}</title>
     {% else %}
-        <title>Facial Recognition</title>
+    <title>Facial Recognition</title>
     {% endif %}
 </head>
+
 <body>
+    <!-- Bootstrap classes for design -->
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Student Database</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">Student Database</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <!-- If user is logged in Show Account and Logout, else show Login and Register-->
+                        {% if session['logged_in']%}
+                        <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                        {%endif%}
+                    </div>
+                </div>
             </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if session['logged_in']%}
-              <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-              {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-              {%endif%}
-            </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
     <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-6">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Area to show flash messages-->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
                 <div class="alert alert-{{ category }}">
-                  {{ message }}
+                    {{ message }}
                 </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-          <div class="content-section">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Log In</legend>
-                    <div class="form-group" >
-                        {{ form.username.label(class="form-control-label") }}
-                        {% if form.username.errors %}
-                            {{ form.username(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.username.errors %}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                {% block content %}{% endblock %}
+                <!-- Login form  -->
+                <div class="content-section">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Log In</legend>
+                            <div class="form-group">
+                                <!-- Gets data from forms.py and displays the username , does checks to validate section-->
+                                {{ form.username.label(class="form-control-label") }}
+                                {% if form.username.errors %}
+                                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
                                     <span>{{ error }}</span>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.username(class="form-control form-control-lg") }}
+                                {% endif %}
                             </div>
-                        {% else %}
-                            {{ form.username(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        {{ form.password.label(class="form-control-label") }}
-                        {% if form.password.errors %}
-                            {{ form.password(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.password.errors %}
+                            <div class="form-group">
+                                <!-- Gets data from forms.py and displays the password , does checks to validate section-->
+                                {{ form.password.label(class="form-control-label") }}
+                                {% if form.password.errors %}
+                                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
                                     <span>{{ error }}</span>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.password(class="form-control form-control-lg") }}
+                                {% endif %}
                             </div>
-                        {% else %}
-                            {{ form.password(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-check">
-                        {{ form.remember(class="form-check-input") }}
-                        {{ form.remember.label(class="form-check-label") }}
-                    </div>
-                </fieldset>
-                <div class="form-group">
-                    {{ form.submit(class="btn-outline-form p-3 mb-2 bg-light text-dark") }}
+                            <div class="form-check">
+                                <!-- Checks if the remember me is checked-->
+                                {{ form.remember(class="form-check-input") }}
+                                {{ form.remember.label(class="form-check-label") }}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <!-- Submit button-->
+                            {{ form.submit(class="btn-outline-form p-3 mb-2 bg-light text-dark") }}
+                        </div>
+                        <small class="text-muted ml-2">
+                            <a href="#">Forgot Password?</a>
+                        </small>
+                    </form>
                 </div>
-                <small class="text-muted ml-2">
-                    <a href="#">Forgot Password?</a>
-                </small>
-            </form>
+
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        <!--Link to redirect to register-->
+                        Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+                    </small>
+                </div>
+            </div>
         </div>
-    
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
-            </small>
-        </div>
-        </div>
-      </div>
     </main>
 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
