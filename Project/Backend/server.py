@@ -10,7 +10,12 @@ sys.path.insert(1, './API')
 from facial_recognition import decodeNumpyToImage
     
 
-#Connect to Mongo Database
+"""Connecting to the MongoDB server.
+
+ Set the MongoClient ,DB and collection 
+ in order to connect to the mongoDB database
+
+"""
 try:
     conn=MongoClient('mongodb+srv://admin:admin@users-qtiue.mongodb.net/test?retryWrites=true&w=majority')
 except pymongo.errors.ConnectionFailure as e:
@@ -21,12 +26,32 @@ db = conn.get_default_database()
 collection = db.users
 
 
-#Load User
+#Load user 
 @login_manager.user_loader
 def load_user(user_id):
     return add_new_user.collection.find(int(user_id))
 
-#Add new user to the MongoDB database
+
+"""Add new user to the MongoDB database
+
+Parameters:
+ username : String
+ firstName : String
+ secondName : String
+ address : String
+ mobileNumber : String
+ password : String
+ email : String
+ Image : binary_encoding
+ npArray : numpy_encoding
+
+:returns 
+If True:
+    Adds the user to the database
+    Returns a success message
+else:
+    Returns an error message
+"""
 def add_new_user(username,firstName,secondName,address,mobileNumber,password, email, Image,npArray):
     print(password)
 
@@ -52,7 +77,18 @@ def add_new_user(username,firstName,secondName,address,mobileNumber,password, em
         return False
 
 
-#Verifiy entered username and password are correct
+"""Verify the entered username and password are correct
+
+Parameters:
+ username : String
+ password_attempt : String
+
+:returns 
+If True:
+    Allows the user Access
+else:
+    Returns an error message
+"""
 def verify_credentials(username,password_attempt):
     try:
         hsh = collection.find_one({'username': username},{'_id':0,'hash':1})['hash']
@@ -69,6 +105,17 @@ def verify_credentials(username,password_attempt):
         return False
 
 
+"""retrieve a users Details from the database
+
+Parameters:
+ searchusername : String
+
+:returns 
+If User Found:
+    Return all user details
+else:
+    Returns an error message
+"""
 def retrieveDetails(searchusername):
     #Initialize result 
     result = []
@@ -95,8 +142,6 @@ def retrieveDetails(searchusername):
         return userName,firstName,secondName,address,email,mobileNum,Image
 
     else:    
-        #If nothing is found return set all to None
-        # and return error message
 
         flash("User Not Found!", 'danger')
         userName = None
@@ -108,7 +153,15 @@ def retrieveDetails(searchusername):
         Image = None
         return userName,firstName,secondName,address,email,mobileNum,Image
 
-#Retrieve Numpy Data for use in facial recognition
+
+"""Retrieve Numpy Data for use in facial recognition
+
+Parameters:
+ searchusername : String
+
+:Returns
+    Return the numpyArray
+"""
 def retrieveNumpy(searchusername):
     results = collection.find({"username": searchusername})
     for result in results:

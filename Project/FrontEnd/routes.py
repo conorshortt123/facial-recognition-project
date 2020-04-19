@@ -13,6 +13,7 @@ sys.path.insert(1, './API')
 from facial_recognition import encodeImageBinary, encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, compareImages, encodeByteToBase64
 from PIL import Image
 
+
 #Global Variables
 global path
 camera = None
@@ -40,8 +41,9 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
+
 """Home Function
-Allows the user to search for other users
+ Allows the user to search for other users
  in the system via username. If the user is not found 
  it will return nothing and give you an error.
 """
@@ -63,9 +65,8 @@ def home():
     return render_template('home.html')
 
 
-"""
-Render the camera template
-"""
+
+#Render the camera template
 @app.route('/camera/')
 def index():
     return render_template('camera.html')
