@@ -5,7 +5,7 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, IMAGES
 from werkzeug.utils import secure_filename
 
-
+# Configure the image uploading via Flask-Uploads
 images = UploadSet('images', IMAGES)
 
 
