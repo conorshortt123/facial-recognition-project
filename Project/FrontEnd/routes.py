@@ -1,26 +1,24 @@
 from flask import render_template, url_for, flash, redirect, request, Response, Flask, session
 from flask_login import login_user, current_user, logout_user, login_required
 from FrontEnd import app, bcrypt
-from FrontEnd.forms import RegistrationForm, LoginForm ,searchForm
+from FrontEnd.forms import RegistrationForm, LoginForm, searchForm
 from FrontEnd.camera import Camera, remove_pic
-from Backend.server import add_new_user, verify_credentials,retrieveDetails, retrieveNumpy
-import sys
-import os
-import shutil
-from PIL import Image
+from Backend.server import add_new_user, verify_credentials, retrieveDetails, retrieveNumpy
 from functools import wraps
-sys.path.insert(1, './API')
-from facial_recognition import encodeImageBinary, encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, compareImages, encodeByteToBase64
-from PIL import Image
+import sys
 
-#Global Variables
+sys.path.insert(1, './API')
+from facial_recognition import encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, \
+    compareImages, encodeByteToBase64
+
+# Global Variables
 global path
 camera = None
 username = ""
 CAPTURES_DIR = "./Frontend/static/"
 
 
-#Retrieve the Camera
+# Retrieve the Camera
 def get_camera():
     global camera
     if not camera:
@@ -28,57 +26,59 @@ def get_camera():
 
     return camera
 
-    
-#Check to see if you are logged in or not
+
+# Check to see if you are logged in or not
 def login_required(f):
     @wraps(f)
-    def wrap(*args,**kwargs):
+    def wrap(*args, **kwargs):
         if 'logged_in' in session:
-            return f(*args,**kwargs)
+            return f(*args, **kwargs)
         else:
             flash("You need to login or signup to view that.")
             return redirect(url_for('login'))
+
     return wrap
 
-"""Home Function
-Allows the user to search for other users
- in the system via username. If the user is not found 
- it will return nothing and give you an error.
-"""
+
 @app.route("/")
-@app.route("/home",methods=['GET','POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def home():
+    """Home Function
+    Allows the user to search for other users
+     in the system via username. If the user is not found
+     it will return nothing and give you an error.
+    """
     error = None
     if request.method == 'POST':
         username = request.form.get('UserName')
-        username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
-        print(username,firstName,secondName,address,email,mobileNumber)
-        
-        Data = [username,firstName,secondName,address,email,mobileNumber]
-        
+        username, firstName, secondName, address, email, mobileNumber, Image = retrieveDetails(username)
+        print(username, firstName, secondName, address, email, mobileNumber)
+
+        Data = [username, firstName, secondName, address, email, mobileNumber]
+
         if Image is not None:
-            Image = Image.decode('utf-8')   
-            return render_template('home.html',user = Data,Image = Image)
-    
+            Image = Image.decode('utf-8')
+            return render_template('home.html', user=Data, Image=Image)
+
     return render_template('home.html')
 
 
-"""
-Render the camera template
-"""
 @app.route('/camera/')
 def index():
+    """
+    Render the camera template
+    """
     return render_template('camera.html')
 
 
-"""Load registration form. Encrypt the image file.
- Send the entered data to the server to verify 
- the username has not been taken. 
- If its not taken create the user
- and return the user to the home page.
-"""
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    """Load registration form. Encrypt the image file.
+     Send the entered data to the server to verify
+     the username has not been taken.
+     If its not taken create the user
+     and return the user to the home page.
+    """
     error = None
     form = RegistrationForm()
     if current_user.is_authenticated:
@@ -94,9 +94,9 @@ def register():
                                form.firstName.data,
                                form.secondName.data,
                                form.address.data,
-                               form.MobileNum.data,         
-                               request.form['password'],                                                    
-                               form.email.data,         
+                               form.MobileNum.data,
+                               request.form['password'],
+                               form.email.data,
                                binary_encoding,
                                numpy_encoding)
         if success:
@@ -108,15 +108,14 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-"""Check if the username exists.
- If it does not exist return an error message
- and return them to the login page.
- If the username exists allow the user to login
- and return them to the home page.
-"""
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-
+    """Check if the username exists.
+     If it does not exist return an error message
+     and return them to the login page.
+     If the username exists allow the user to login
+     and return them to the home page.
+    """
     global username
 
     if username:
@@ -134,12 +133,6 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-"""Check if the username exists.
- If it does not exist return an error message
- and return them to the login page.
- If the username exists allow the user to login
- and return them to the home page.
-"""
 @app.route("/checkface", methods=['GET', 'POST'])
 def checkface(user):
     try:
@@ -170,7 +163,7 @@ def checkface(user):
         print("Couldn't open image")
 
 
-#Log the user out
+# Log the user out
 @app.route("/logout")
 @login_required
 def logout():
@@ -179,18 +172,18 @@ def logout():
     return redirect(url_for('home'))
 
 
-#Retrieve the current users details and display them
+# Retrieve the current users details and display them
 @app.route("/account")
 @login_required
 def account():
     request.method == 'GET'
     username = session['current_user']
-    username,firstName,secondName,address,email,mobileNumber,Image = retrieveDetails(username)
+    username, firstName, secondName, address, email, mobileNumber, Image = retrieveDetails(username)
 
-    Data = [username,firstName,secondName,address,email,mobileNumber]
-        
+    Data = [username, firstName, secondName, address, email, mobileNumber]
+
     Image = Image.decode('utf-8')
-    return render_template('account.html', title='Account', user = Data,Image = Image)
+    return render_template('account.html', title='Account', user=Data, Image=Image)
 
 
 def gen(camera):
@@ -204,7 +197,7 @@ def gen(camera):
 def video_feed():
     camera = get_camera()
     return Response(gen(camera),
-        mimetype='multipart/x-mixed-replace; boundary=frame')
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/capture/')
@@ -220,5 +213,4 @@ def show_capture(timestamp):
     path = "captures/" + timestamp + ".jpg"
 
     return render_template('capture.html',
-        stamp=timestamp, path=path)
-
+                           stamp=timestamp, path=path)
