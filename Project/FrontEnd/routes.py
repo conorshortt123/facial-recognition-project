@@ -40,11 +40,11 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
-#"""Home Function
-#Allows the user to search for other users
-# in the system via username. If the user is not found 
-# it will return nothing and give you an error.
-#"""
+"""Home Function
+Allows the user to search for other users
+ in the system via username. If the user is not found 
+ it will return nothing and give you an error.
+"""
 @app.route("/")
 @app.route("/home",methods=['GET','POST'])
 def home():
@@ -63,20 +63,20 @@ def home():
     return render_template('home.html')
 
 
-#"""
-#Render the camera template
-#"""
+"""
+Render the camera template
+"""
 @app.route('/camera/')
 def index():
     return render_template('camera.html')
 
 
-#"""Load registration form. Encrypt the image file.
-# Send the entered data to the server to verify 
-# the username has not been taken. 
-# If its not taken create the user
-# and return the user to the home page.
-#"""
+"""Load registration form. Encrypt the image file.
+ Send the entered data to the server to verify 
+ the username has not been taken. 
+ If its not taken create the user
+ and return the user to the home page.
+"""
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     error = None
@@ -108,12 +108,12 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-#"""Check if the username exists.
-# If it does not exist return an error message
-# and return them to the login page.
-# If the username exists allow the user to login
-# and return them to the home page.
-#"""
+"""Check if the username exists.
+ If it does not exist return an error message
+ and return them to the login page.
+ If the username exists allow the user to login
+ and return them to the home page.
+"""
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 
@@ -134,12 +134,12 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-#"""Check if the username exists.
-# If it does not exist return an error message
-# and return them to the login page.
-# If the username exists allow the user to login
-# and return them to the home page.
-#"""
+"""Check if the username exists.
+ If it does not exist return an error message
+ and return them to the login page.
+ If the username exists allow the user to login
+ and return them to the home page.
+"""
 @app.route("/checkface", methods=['GET', 'POST'])
 def checkface(user):
     try:

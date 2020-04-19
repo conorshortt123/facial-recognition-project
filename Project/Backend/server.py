@@ -20,6 +20,7 @@ except pymongo.errors.ConnectionFailure as e:
 db = conn.get_default_database()
 collection = db.users
 
+
 #Load User
 @login_manager.user_loader
 def load_user(user_id):
