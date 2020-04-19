@@ -11,6 +11,7 @@ sys.path.insert(1, './API')
 from facial_recognition import encodeImageNumpy, encodeImageFaceRec, decodeBinaryToNumpy, \
     compareImages, encodeByteToBase64
 
+
 # Global Variables
 global path
 camera = None
@@ -63,6 +64,7 @@ def home():
     return render_template('home.html')
 
 
+#Render the camera template
 @app.route('/camera/')
 def index():
     """
