@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{courier} %% Sets font for listing as Courier.
+\usepackage{listings, xcolor}
+\usepackage{biblatex}
+
+\addbibresource{test.bib}
+
+\lstset{
+tabsize = 4, %% set tab space width
+showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+numbers = left, %% display line numbers on the left
+commentstyle = \color{green}, %% set comment color
+keywordstyle = \color{blue}, %% set keyword color
+stringstyle = \color{red}, %% set string color
+rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+basicstyle = \small \ttfamily , %% set listing font and size
+breaklines = true, %% enable line breaking
+numberstyle = \tiny,
+}
+
+\title{Professional Practice in IT Project}
+\author{
+  Conor Shortt\\
+  \href{https://github.com/conorshortt123}{Github}
+  \and
+  Blaine Burke\\
+  \href{https://github.com/BurkeBlaine1999}{Github}
+  \and
+  Mark Reilly\\
+  \href{https://github.com/MarkReillyGMIT}{Github}
+}
+\date{\today}
+
+\begin{document}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.3]{gmit}
+\end{figure}
+
+\maketitle
+
+
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+
+\begin{lstlisting}[language = Java, caption=Hello World in Java, label=dfd]
+public class HelloWorld {
+
+}
+\end{lstlisting}
+
+Shown in \autoref{lstjava} is our main project code, give me an A? We see the GMIT logo in \autoref{fig:my_label}. I stole this code from \cite{helloworld}. For more information on public key cryptography as used in this project see \cite{al2003certificateless}.
+\lipsum
+
+\subsection{Why we did this project}
+
+\lipsum
+
+\section{System Requirements}
+In order to run the project, there are several requirements needed.
+\begin{itemize}
+  \item A webcam is required to use the App as when it comes to logging in you will be prompted to scan your face for two factor authentications.  You are also required to upload a self-portrait Image of yourself in order to register an account.
+  \item You are required to install the latest version of python 3. Link(https://www.python.org/downloads/)
+  \itemThe project decencies are required to run our application. To install them follow the steps below! 
+    \begin{enumerate}
+    \item Clone the project to your desktop.
+    \item Open the project and open command prompt
+    \item Enter ‘pip install -r requirements.txt’ to download the dependencies
+    \end{enumerate}
+  \item You are required to have \href{https://cmake.org/}{Cmake} and \href{http://dlib.net/}{Dlib} installed
+  \item A text/Script editor you have installed. For example Visual Studio Code
+\end{itemize}
+
+
+\section{Technology Used}
+In the process of making our project we used several different technologies.
+\begin{enumerate}
+\item \href{https://www.python.org/downloads/}{Python} \\
+We used python as our programming language as it has wide variety of libraries we could use making it our best option over other languages. Python is also very simple to use , proof being that this is our first python project .
+
+
+\item \href{https://flask.palletsprojects.com/en/1.1.x/}{Flask} \\
+We used Flask as our python framework for our web application. 
+Flask is a small and powerful web framework for Python. 
+It's easy to learn and simple to use, enabling you to build your web app in a short amount of time. Flask can be used for building complex, database-driven websites
+We chose flask due to its extensive documentation online so if we had issues we could easily find a soloution
+
+\item \href{https://www.mongodb.com/}{MongoDB} \\
+MongoDB is an open source database management system (DBMS) that uses a document-oriented database model which supports various forms of 
+Data. This is one reason we chose it as we have several different types of data we needed to add such as numpy and binary arrays. It  also has  a very flexible data model and is very easy to learn!
+
+\item Webcam \\	
+We chose to use a webcam as we required one for facial recognition.
+A webcam is essential for our application as without a webcam the user cannot login to our App due to our facial recognition two factor authentication. 
+Any webcam should work that is connected to your Computer.
+
+\item \href{https://pillow.readthedocs.io/en/stable/}{PIL} \\
+PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
+We used PIL to convert images to bytes then to base 64 so we can easily store it on our database.
+
+\item \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} \\
+We used  \href{https://github.com/ageitgey}{Adam Geitgeys} \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} in our project for our two factor authentication when logging in.
+\end{enumerate}
+\section{Design Methodology}
+
+\section{Features of the Implementation}
+
+\section{Limitations and known bugs}
+
+\section{Testing Plans}
+
+\section{Recommendations for Future Development}
+
+\subsection{Current State of the Software}
+
+\section{Conclusions}
+
+\newpage
+\printbibliography
+
+\end{document}
