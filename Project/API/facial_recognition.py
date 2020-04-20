@@ -40,12 +40,17 @@ def encodeImageNumpy(image):
     # Opens image and converts to a numpy array
     image_file = face_recognition.load_image_file(image)
     # Converts numpy array to the array used by facial recognition
-    image_encoding = face_recognition.face_encodings(image_file)[0]
+    encodings = face_recognition.face_encodings(image_file)
+    if len(encodings) > 0:
+        image_encoding = encodings[0]
+    else:
+        image_encoding = "error"
     # Encodes the array into a base64 binary array. Must be stored as a base64 array in MongoDB.
-    if image_encoding:
+    if image_encoding is not "error":
         binary_array = Binary(pickle.dumps(image_encoding, protocol=2), subtype=128)
-
-    return binary_array
+        return binary_array
+    else:
+        return "error"
 
 """
 Encodes the image passed into a numpy array used for facial recognition.
@@ -61,9 +66,13 @@ def encodeImageFaceRec(image):
     # Carries out the same task as the function above, but doesn't encode the array into base64
     # This is used when encoding the login image.
     image_file = face_recognition.load_image_file(image)
-    image_encoding = face_recognition.face_encodings(image_file)[0]
+    encodings = face_recognition.face_encodings(image_file)
 
-    return image_encoding
+    if len(encodings) > 0:
+        image_encoding = encodings[0]
+        return image_encoding
+    else:
+        return "error"
 
 """
 Decodes the registry image's numpy array from binary back to numpy.

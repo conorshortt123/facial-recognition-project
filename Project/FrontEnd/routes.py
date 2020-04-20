@@ -92,21 +92,24 @@ def register():
         binary_encoding = encodeByteToBase64(imagefile)
         numpy_encoding = encodeImageNumpy(imagefile)
 
-        success = add_new_user(form.username.data,
-                               form.firstName.data,
-                               form.secondName.data,
-                               form.address.data,
-                               form.MobileNum.data,
-                               request.form['password'],
-                               form.email.data,
-                               binary_encoding,
-                               numpy_encoding)
-        if success:
-            flash('Your account has been created! You are now able to log in', 'success')
-            return redirect(url_for('home'))
+        if numpy_encoding is not "error":
+            success = add_new_user(form.username.data,
+                                   form.firstName.data,
+                                   form.secondName.data,
+                                   form.address.data,
+                                   form.MobileNum.data,
+                                   request.form['password'],
+                                   form.email.data,
+                                   binary_encoding,
+                                   numpy_encoding)
+            if success:
+                flash('Your account has been created! You are now able to log in', 'success')
+                return redirect(url_for('home'))
+            else:
+                flash('Username ' + form.username.data + ' already exists, Please try alternative Username', 'danger')
+                error = 'Username already exists'
         else:
-            flash('Username ' + form.username.data + ' already exists, Please try alternative Username', 'danger')
-            error = 'Username already exists'
+            flash('No face detected in image, please upload an clear, front-facing image of your face.', 'danger')
     return render_template('register.html', title='Register', form=form)
 
 
@@ -149,24 +152,27 @@ def checkface(user):
 
         # Encode login image
         img1 = encodeImageFaceRec(img)
-        print(img1)
+        if img1 is not "error":
 
-        # Get registered image from database and decode from binary encoding to numpy
-        known_face = retrieveNumpy(user)
-        img2 = decodeBinaryToNumpy(known_face)
+            # Get registered image from database and decode from binary encoding to numpy
+            known_face = retrieveNumpy(user)
+            img2 = decodeBinaryToNumpy(known_face)
 
-        # Compare two numpy arrays
-        result = compareImages(img1, img2)
+            # Compare two numpy arrays
+            result = compareImages(img1, img2)
 
-        if result[0]:
-            session['logged_in'] = True
-            session['current_user'] = user
-            remove_pic()
-            flash('You are now logged in!', 'success')
-            return render_template('home.html')
+            if result[0]:
+                session['logged_in'] = True
+                session['current_user'] = user
+                remove_pic()
+                flash('You are now logged in!', 'success')
+                return redirect(url_for('home'))
+            else:
+                flash("Faces didn't match, please log in again.", 'danger')
+                return redirect(url_for('login'))
         else:
-            flash("Faces didn't match, please log in again.", 'error')
-
+            flash('No face detected in login, please take a clear, front-facing photo.', 'danger')
+            return redirect(url_for('login'))
     except IOError:
         print("Couldn't open image")
 
