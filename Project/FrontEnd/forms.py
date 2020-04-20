@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, IMAGES
-
 images = UploadSet('images', IMAGES)
 
 
@@ -35,8 +34,7 @@ class RegistrationForm(FlaskForm):
  database. Set requirements
 """
 class searchForm(FlaskForm):
-    username = StringField('Username', 
-                            validators=[DataRequired(), Length(min=2, max=20)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
 
 
 """Create the Login form. 

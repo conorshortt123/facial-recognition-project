@@ -1,105 +1,100 @@
+<!-- Dispay all code from layout.html -->
 {% extends "layout.html" %}
 {% block content %}
+<!-- If session is logged_in then show the following code, else show other code see line 92-->
 {%if session['logged_in'] %}
-    <!-- <div class="content-section">
-        <div class="media">
-          <img class="rounded-circle account-img" src="data:Image/png;base64,{{Image}}">
-          <div class="media-body">
-            <h2 class="account-heading">{{ user[1] }} {{user[2]}}</h2>
-            <p class="text-secondary">{{ user[4] }}</p>
-          </div>
+<!--Bootstrap classes for design -->
+<div class="container bootstrap snippet">
+    <legend class="border-bottom mb-4">Account Information</legend>
+    <div class="panel-body inf-content">
+        <div class="row">
+            <div class="col-md-4">
+                <!--Display the current user profile image -->
+                <img alt="Profile Image" style="width:600px;" title="Profile" class="img-circle img-thumbnail isTooltip"
+                    src="data:Image/png;base64,{{Image}}" data-original-title="Usuario">
+            </div>
+            <!-- Display user information -->
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>
+                                        Name
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <!-- Gets the user data from database -->
+                                    {{ user[1] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-cloud text-primary"></span>
+                                        Lastname
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{user[2]}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                        Username
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{user[0]}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                        Email
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{user[4]}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Address
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{user[3]}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Mobile
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{user[5]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <legend class="border-bottom mb-4">Account Info</legend>
-        <div class="form-group">
-            Address: {{user[3]}}
-        </div>
-    </div> -->
-    <div class="container bootstrap snippet">
-      <legend class="border-bottom mb-4">Account Information</legend>
-      <div class="panel-body inf-content">
-          <div class="row">
-              <div class="col-md-4">
-                  <img alt="Profile Image" style="width:600px;" title="Profile" class="img-circle img-thumbnail isTooltip" src="data:Image/png;base64,{{Image}}" data-original-title="Usuario"> 
-              </div>
-              <div class="col-md-6">
-                  <div class="table-responsive">
-                  <table class="table table-condensed table-responsive table-user-information">
-                      <tbody>
-                          <tr>    
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-user  text-primary"></span>    
-                                      Name                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{ user[1] }}      
-                              </td>
-                          </tr>
-                          <tr>        
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-cloud text-primary"></span>  
-                                      Lastname                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{user[2]}}  
-                              </td>
-                          </tr>
-      
-                          <tr>        
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-bookmark text-primary"></span> 
-                                      Username                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{user[0]}} 
-                              </td>
-                          </tr>
-                          <tr>        
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-envelope text-primary"></span> 
-                                      Email                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{user[4]}}  
-                              </td>
-                          </tr>
-                          <tr>        
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                      Address                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{user[3]}}
-                              </td>
-                          </tr>
-                          <tr>        
-                              <td>
-                                  <strong>
-                                      <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                      Mobile                                                
-                                  </strong>
-                              </td>
-                              <td class="text-primary">
-                                {{user[5]}}
-                              </td>
-                          </tr>                                    
-                      </tbody>
-                  </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>                                        
+    </div>
+</div>
 {% else %}
-    Please Login.
+<!-- Show this is not logged in-->
+Please Login.
 {% endif %}
 {% endblock content %}

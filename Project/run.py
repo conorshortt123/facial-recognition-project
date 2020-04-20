@@ -1,4 +1,3 @@
-import threading
 from FrontEnd import app
 
 # check to see if this is the main thread of execution
