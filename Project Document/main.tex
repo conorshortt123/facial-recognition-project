@@ -109,6 +109,13 @@ We used PIL to convert images to bytes then to base 64 so we can easily store it
 
 \item \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} \\
 We used  \href{https://github.com/ageitgey}{Adam Geitgeys} \href{https://github.com/ageitgey/face_recognition}{Face recognition Module} in our project for our two factor authentication when logging in.
+
+\item \href{https://flask-bcrypt.readthedocs.io/en/latest/}{Flask-Bcrypt} \\	
+Flask-Bcrypt is a Flask extension that provides bcrypt hashing utilities for your application. We used bcrypt to hash the users password to implement a high level of security.
+
+\item \href{https://flask-login.readthedocs.io/en/latest/}{Login Manager} \\	
+Flask-Login provides user session management for Flask. It handles the common tasks of logging in, logging out, and remembering your users’ sessions over extended periods of time.Login manager made the login system run more efficiently.
+
 \\
 \\
 \\
@@ -155,6 +162,7 @@ There are several features available in our project.
     \item A search bar that allows the user to search through the database  via username and retrieve the users profile.
     This contains their profile photo , username and email.
     \item An account button that allows the current user to view their own profile.
+    \item Facial recognition Login which takes the users profile image from registration and compares it to the live image taken when the user enters their correct login details, this adds another layer of security to the application.
 
 \end{enumerate}
 
