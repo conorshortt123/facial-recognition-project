@@ -167,7 +167,7 @@ When it came to connecting the MongoDB server, at first it would not connect and
 \item \textbf{Dlib} \\
 With Dlib we found it tough to get it installed correctly. In the beginning we could not figure out to get it installed properly as it would keep throwing errors every time, we called it. In the end with some research and determination we eventually got Dlib correctly working on our systems
 \item \textbf{Facial Recognition} \\
-In regards to the facial recognition side of the project, we originally had live facial recognition partially implemented. The idea was it would draw a box around the face of the user in the login screen, displaying their name at the bottom of the box if they were detected correctly, or "Unkown" if they weren't detected, but the limitation of this was that it was significantly more resource intensive to do live facial recognition. This is why we changed it to a single frame being captured and processed without drawing anything or altering the image taken.
+In regards to the facial recognition side of the project, we originally had live facial recognition partially implemented. The idea was it would draw a box around the face of the user in the login screen, displaying their name at the bottom of the box if they were detected correctly, or "Unknown" if they weren't detected, but the limitation of this was that it was significantly more resource intensive to do live facial recognition. This is why we changed it to a single frame being captured and processed without drawing anything or altering the image taken.
 \item \textbf{Storing Images in the Database} \\
 Limitations of the database which we weren't aware of until later on was that we were not able to store images unless they were converted to bytes and then converted to a binary base64 array. We stored two arrays on the database, one for decoding to an image to be displayed on the search page, and one for decoding to numpy array to be used for facial recognition.
 \item \textbf{Capturing images with webcam} \\
@@ -178,9 +178,9 @@ A bug that plagued us for quite a long time was that upon capturing and image wi
 \newpage
 
 \section{Features of the Implementation}
-
 There are several features available in our project.
 \begin{enumerate}
+
     \item A Register system that requires several details such as the username and stores the details to a database.
     Due to our databases primary key being the username, they must all be different.
     See image (a) below.
@@ -200,6 +200,7 @@ There are several features available in our project.
     \end{figure}
 
     \item A Login system that validates the Users Username and password by checking if they match the records in the database. See image (b) above
+    
     \begin{figure}[h!]
     \centering
       \begin{subfigure}[]{0.4\textwidth}
@@ -209,9 +210,11 @@ There are several features available in our project.
         \label{fig:1}
       \end{subfigure}
     \end{figure}
+    
     \item A Login / Logout system that allows the current user of a session to logout once logged in to allow another user to log in on the same device!\\ See Figure (a) above.
 
     \newpage
+    
     \item A search bar that allows the user to search through the database  via username and retrieve the users profile.
     This contains their profile photo, username and email. See figure (a) below.
     \begin{figure}[h!]
@@ -240,14 +243,15 @@ There are several features available in our project.
       \end{subfigure}
     \end{figure}
     \item An account button that allows the current user to view their own profile. See figure (b) above.
-    \item Facial recognition Login which takes the users profile image from registration and compares it to the live
-    image taken when the user enters their correct login details, this adds another layer of security to the application.
-    \begin{subfigure}[b]{0.9\textwidth}
+    \item Facial recognition Login which takes the users profile image from registration and compares it to the live image taken when the user enters their correct login details, this adds another layer of security to the application. See Figure (a) below
+    \begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/SamplePictures/FaceRec.png}
         \caption{The Facial recognition page}
         \label{fig:2}
     \end{subfigure}
-
+    \end{figure}
 \end{enumerate}
 
 \newpage
@@ -255,9 +259,10 @@ There are several features available in our project.
 \section{Testing Plans}
 
 When it came to testing out our App we used mostly white box testing where the tester knows the internals of the code being tested and a small bit of black box testing where the tester knows nothing of the internals of the code.
-\\
-\\
+\\ \\
 White box testing allowed us to test our code faster and more efficiently but black box testing proved useful as it gave us the opinion of an outside source  , helping us get more ideas and opinions and allowed us to see if our app is ergonomic to a wide range of users and easy to navigate through.
+\\ \\
+When we were black box testing we deliberately attempted to break our app. This is so we could try be prepared for any errors that may occur making our application less likely to crash
 
 \newpage
 
