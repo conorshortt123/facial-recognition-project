@@ -160,27 +160,29 @@ Now that the bulk of the work was done we had to clean up our code and UI. We be
 \newpage
 
 \section{Limitations and known bugs}
-Throughout the course of making out project we encountered many bug and limitations but we gradually over came them and worked around them.
+Throughout the course of making out project we encountered many bugs and limitations but we gradually over came them and worked around them.
 \begin{enumerate}
 \item \textbf{MongoDB} \\
 When it came to connecting the MongoDB server, at first it would not connect and would throw errors whenever we tried to call from it. After several YouTube tutorials and after scrolling through several different stack overflow forums we figured it out and implemented the fixes. 
 \item \textbf{Dlib} \\
 With Dlib we found it tough to get it installed correctly. In the beginning we could not figure out to get it installed properly as it would keep throwing errors every time, we called it. In the end with some research and determination we eventually got Dlib correctly working on our systems
 \item \textbf{Facial Recognition} \\
-In regards to the facial recognition side of the project, we originally had live facial recognition partially implemented. The idea was it would draw a box around the face of the user in the login screen, displaying their name at the bottom of the box if they were detected correctly, or "Unkown" if they weren't detected, but the limitation of this was that it was significantly more resource intensive to do live facial recognition. This is why we changed it to a single frame being captured and processed without drawing anything or altering the image taken.
+In regards to the facial recognition side of the project, we originally had live facial recognition partially implemented. The idea was it would draw a box around the face of the user in the login screen, displaying their name at the bottom of the box if they were detected correctly, or "Unknown" if they weren't detected, but the limitation of this was that it was significantly more resource intensive to do live facial recognition. This is why we changed it to a single frame being captured and processed without drawing anything or altering the image taken.
 \item \textbf{Storing Images in the Database} \\
 Limitations of the database which we weren't aware of until later on was that we were not able to store images unless they were converted to bytes and then converted to a binary base64 array. We stored two arrays on the database, one for decoding to an image to be displayed on the search page, and one for decoding to numpy array to be used for facial recognition.
 \item \textbf{Capturing images with webcam} \\
 A bug that plagued us for quite a long time was that upon capturing and image with the webcam and saving it locally, trying to display that subsequent image straight away resulted in the webpage displaying the wrong image. To solve this we used ajax to update the webpage without reloading and this displayed the correct image.
+\item \textbf{Flask} \\
+With Flask we found throughout the project when importing different functions from within the project, it could not find the function.This lead to a great deal of time being consumed with fixing the imports and solving the bugs. In the end after lots of testing the importing of various functions was solved.
 
 \end{enumerate}
 
 \newpage
 
 \section{Features of the Implementation}
-
 There are several features available in our project.
 \begin{enumerate}
+
     \item A Register system that requires several details such as the username and stores the details to a database.
     Due to our databases primary key being the username, they must all be different.
     See image (a) below.
@@ -200,6 +202,7 @@ There are several features available in our project.
     \end{figure}
 
     \item A Login system that validates the Users Username and password by checking if they match the records in the database. See image (b) above
+    
     \begin{figure}[h!]
     \centering
       \begin{subfigure}[]{0.4\textwidth}
@@ -209,9 +212,11 @@ There are several features available in our project.
         \label{fig:1}
       \end{subfigure}
     \end{figure}
+    
     \item A Login / Logout system that allows the current user of a session to logout once logged in to allow another user to log in on the same device!\\ See Figure (a) above.
 
     \newpage
+    
     \item A search bar that allows the user to search through the database  via username and retrieve the users profile.
     This contains their profile photo, username and email. See figure (a) below.
     \begin{figure}[h!]
@@ -240,17 +245,15 @@ There are several features available in our project.
       \end{subfigure}
     \end{figure}
     \item An account button that allows the current user to view their own profile. See figure (b) above.
-    \item Facial recognition Login which takes the users profile image from registration and compares it to the live
-    image taken when the user enters their correct login details, this adds another layer of security to the application.
-    \\
-    \begin{center}
-    \begin{subfigure}[b]{0.6\textwidth}
+    \item Facial recognition Login which takes the users profile image from registration and compares it to the live image taken when the user enters their correct login details, this adds another layer of security to the application. See Figure (a) below
+    \begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/SamplePictures/FaceRec.png}
         \caption{The Facial recognition page}
         \label{fig:2}
     \end{subfigure}
-    \end{center}
-
+    \end{figure}
 \end{enumerate}
 
 \newpage
@@ -258,9 +261,10 @@ There are several features available in our project.
 \section{Testing Plans}
 
 When it came to testing out our App we used mostly white box testing where the tester knows the internals of the code being tested and a small bit of black box testing where the tester knows nothing of the internals of the code.
-\\
-\\
+\\ \\
 White box testing allowed us to test our code faster and more efficiently but black box testing proved useful as it gave us the opinion of an outside source  , helping us get more ideas and opinions and allowed us to see if our app is ergonomic to a wide range of users and easy to navigate through.
+\\ \\
+When we were black box testing we deliberately attempted to break our app. This is so we could try be prepared for any errors that may occur making our application less likely to crash
 
 \newpage
 
@@ -281,20 +285,29 @@ Another direction that this software could easily be brought in is a criminal re
 The database could also be geared for industrial use. If an employer needed to keep track of where every employee was in the company site for example they could set up a camera system, connected to a computer which took frames from the cameras and compared faces in each camera to the database of employees, if someone not registered as an employee entered the building, an alert of some sort could be triggered.
 \\\textbf{Home Security}\\\\
 The database could be set up for a household where every person in the house is registered in the database. A camera is mounted at the entrance to the home and whenever someone is detected in the camera a computer connected to the camera performs facial recognition and lets them in depending if their face is registered in the database or not.
-\\\\
 \begin{figure}[h!]
+\centering
 \includegraphics[scale=0.5]{images/facerec.png}
-\caption{\cite{ageitgey}Live facial recognition - Adam Geitgeys}
+\caption{Live facial recognition - Adam Geitgeys}\cite{ageitgey}
 \end{figure}
-
+\\\\
 As explained above there are many options for expanding on this software and it could be taken in several directions.
 
 \newpage
 
 \section{Conclusions}
-
+In conclusion we feel we achieved all the main objectives set out at the start of the project. Have a working login system using facial recognition was the main component of the project and this was achieved through a lot of research and testing, we also feel our communication skills within a project environment have improved immensely, which will benefit us greatly in the future. 
+Having been allowed to explore different technologies from the very start of the project we feel it has given each of us, a taste of different technologies we would have never come across, if there was a set technology to be used. \textbf{Some of the different learning's/findings are highlighted below:}
+\\
+\begin{itemize}
+    \item Working as a team can be extremely difficult, but throughout the duration of this project we feel we all gained a lot of experience and skills necessary for collaboration.
+    \item How to effectively use collaborative software such as Github, this was extremely useful for keeping everyone updated and working on the same code.
+    \item  How to distribute the work load of our project evenly among our group to ensure fairness and that the work load is manageable.
+    \item We each learned significant amount about our respective areas, in developing the frontend, backend, and the facial recognition scripts that were written.
+    \item Python was relatively new to all of us when we undertook this project, and we all took the risk in choosing it as the language we would utilize to create our software, but we all learned a lot about the language and how simplistic but extremely effective it is.
+    \item Flask was also completely new to all of us and we had never heard of it before the initial project planning phase. It came down to Flask or Django for our frontend development and then everything else would've been developed from it. We chose Flask as it was more lightweight and intuitive than Django. We were glad we chose Flask in the end because development went smoothly for everyone.
+\end{itemize}
 
 \newpage
 \printbibliography
-
 \end{document}
