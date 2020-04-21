@@ -165,7 +165,7 @@ def checkface(user):
                 session['logged_in'] = True
                 session['current_user'] = user
                 remove_pic()
-                flash('You are now logged in!', 'success')
+                flash('Welcome ' + user + '. You are now logged in!', 'success')
                 return redirect(url_for('home'))
             else:
                 flash("Faces didn't match, please log in again.", 'danger')
