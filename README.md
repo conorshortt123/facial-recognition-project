@@ -42,6 +42,14 @@ Once this verifies you are logged in and can procceed to search the database for
  Go to '127.0.0.1:5000' on your web browser
  ```
 
+## Video Demonstration
+
+Microsoft streams:
+https://web.microsoftstream.com/video/694637d7-c89a-4c9c-ab69-b054c5e34480?list=studio
+
+Google Drive if above not working:
+https://drive.google.com/open?id=1UvBYUatnWF9A2r8L1oFg6C3IMn5BUVYT
+
 ## Built With
 
 * [Python](https://www.python.org/) - Language Used
