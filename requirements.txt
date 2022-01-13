@@ -36,7 +36,7 @@ networkx==2.4
 numpy==1.18.1
 opencv-contrib-python==4.2.0.32
 opencv-python==4.2.0.32
-Pillow==7.0.0
+Pillow==9.0.0
 pycodestyle==2.5.0
 pycparser==2.19
 pylint==2.4.4
